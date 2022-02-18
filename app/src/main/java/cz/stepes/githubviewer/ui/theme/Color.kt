@@ -10,10 +10,10 @@ val White = Color(0xFFFFFFFF)
 
 // Dark theme
 val DarkBoxBg = Color(0xFF21262D)
-val DarkTextOnBox = Color(0xFF8B949E)
-val DarkSmallTextOnBg = Color(0xFF474D55)
+val DarkTextOnBox = Color(0xFF7D8894)
+val DarkSmallTextOnBg = Color(0xFF535A63)
 
 // Light theme
 val LightBoxBg = Color(0xFFF6F8FA)
 val LightTextOnBox = Color(0xFF57606A)
-val LightSmallTextOnBg = Color(0xFFB2B9C3)
+val LightSmallTextOnBg = Color(0xFFBFC6CF)
