@@ -2,8 +2,10 @@
 <resources>
 
     <style name="Theme.GitHubViewer" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">?android:attr/windowBackground</item>
     </style>
 </resources>
