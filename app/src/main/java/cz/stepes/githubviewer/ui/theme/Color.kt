@@ -2,7 +2,18 @@ package cz.stepes.githubviewer.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val HighlightGreen = Color(0xFF31B24E)
+val HighlightBlue = Color(0xFF1F6FEB)
+
+val OffBlack = Color(0xFF0D1117)
+val White = Color(0xFFFFFFFF)
+
+// Dark theme
+val DarkBoxBg = Color(0xFF21262D)
+val DarkTextOnBox = Color(0xFF8B949E)
+val DarkSmallTextOnBg = Color(0xFF474D55)
+
+// Light theme
+val LightBoxBg = Color(0xFFF6F8FA)
+val LightTextOnBox = Color(0xFF57606A)
+val LightSmallTextOnBg = Color(0xFFB2B9C3)
