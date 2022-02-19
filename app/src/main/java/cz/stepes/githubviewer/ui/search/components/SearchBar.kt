@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.ui.theme.spacing
-import cz.stepes.githubviewer.ui.theme.textSize
+import cz.stepes.githubviewer.ui.shared.theme.spacing
+import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.KeyboardState
 import cz.stepes.githubviewer.util.keyboardAsState
 
@@ -66,7 +66,7 @@ fun SearchBar(
             singleLine = true,
             cursorBrush = SolidColor(MaterialTheme.colors.primary),
             textStyle = LocalTextStyle.current.copy(
-                color = MaterialTheme.colors.onBackground,
+                color = if (enabled) MaterialTheme.colors.onBackground else MaterialTheme.colors.onSurface,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = MaterialTheme.textSize.normal
             ),

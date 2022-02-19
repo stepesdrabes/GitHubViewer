@@ -10,8 +10,11 @@
     <string name="search_description">Začněte zadáním uživatelského jméno do textového pole nahoře</string>
     <string name="search">Hledat</string>
 
+    <string name="user_loading_error">Nastala chyba při načítání!</string>
+
     <string name="back">Back</string>
     <string name="no_connection">Oops!\nPřipojení k nelze navázat</string>
     <string name="error_404">404</string>
     <string name="not_found">Hledaná položka nebyla nalezena!</string>
+    <string name="open_in_browser">Otevřít v prohlížeči</string>
 </resources>

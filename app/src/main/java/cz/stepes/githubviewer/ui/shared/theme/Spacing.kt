@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.theme
+package cz.stepes.githubviewer.ui.shared.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -13,7 +13,8 @@ data class Spacing(
     val medium: Dp = 15.dp,
     val large: Dp = 20.dp,
     val extraLarge: Dp = 30.dp,
-    val pagePadding: Dp = 24.dp
+    val pagePadding: Dp = 24.dp,
+    val textOffset: Dp = 2.dp
 )
 
 val LocalSpacing = compositionLocalOf { Spacing() }

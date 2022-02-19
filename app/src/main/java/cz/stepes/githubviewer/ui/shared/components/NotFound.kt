@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.shared
+package cz.stepes.githubviewer.ui.shared.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,8 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.ui.theme.spacing
-import cz.stepes.githubviewer.ui.theme.textSize
+import cz.stepes.githubviewer.ui.shared.theme.spacing
+import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Composable
 fun NotFound(

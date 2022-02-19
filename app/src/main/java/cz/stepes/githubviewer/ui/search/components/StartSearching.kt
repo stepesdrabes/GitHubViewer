@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.ui.theme.spacing
-import cz.stepes.githubviewer.ui.theme.textSize
+import cz.stepes.githubviewer.ui.shared.theme.spacing
+import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Composable
 fun StartSearching(

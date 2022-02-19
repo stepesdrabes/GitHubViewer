@@ -1,6 +1,5 @@
 package cz.stepes.githubviewer.ui.landing
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -17,9 +16,9 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.ui.destinations.SearchScreenDestination
-import cz.stepes.githubviewer.ui.shared.IconLabelButton
-import cz.stepes.githubviewer.ui.theme.spacing
-import cz.stepes.githubviewer.ui.theme.textSize
+import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
+import cz.stepes.githubviewer.ui.shared.theme.spacing
+import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Destination(start = true)
 @Composable

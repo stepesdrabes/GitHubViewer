@@ -3,6 +3,8 @@ package cz.stepes.githubviewer.data.remote
 import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
+import cz.stepes.githubviewer.util.Resource
+import cz.stepes.githubviewer.util.ResourceErrorState
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
@@ -17,38 +19,38 @@ class GitHubServiceImpl(
         }
     }
 
-    override suspend fun getUser(username: String): Result<UserResponse?> {
+    override suspend fun getUser(username: String): Resource<UserResponse> {
         return try {
-            Result.success(
+            Resource.Success(
                 client.get {
                     url("${HttpRoutes.USER_URL}/$username")
                 }
             )
         } catch (exception: ClientRequestException) {
-            return Result.success(null)
+            return Resource.Error(state = ResourceErrorState.NotFound)
         } catch (exception: Exception) {
-            return Result.failure(exception = exception)
+            return Resource.Error(state = ResourceErrorState.NetworkError)
         }
     }
 
-    override suspend fun getRepositories(username: String): Result<List<RepositoryResponse>?> {
+    override suspend fun getRepositories(username: String): Resource<List<RepositoryResponse>> {
         return try {
-            Result.success(
+            Resource.Success(
                 client.get {
                     url("${HttpRoutes.USER_URL}/$username/${HttpRoutes.REPOS}")
                 }
             )
         } catch (exception: ClientRequestException) {
-            return Result.success(null)
+            return Resource.Error(state = ResourceErrorState.NotFound)
         } catch (exception: Exception) {
-            return Result.failure(exception = exception)
+            return Resource.Error(state = ResourceErrorState.NetworkError)
         }
     }
 
     override suspend fun getCommits(
         username: String,
         repoName: String
-    ): Result<List<CommitResponse>?> {
+    ): Resource<List<CommitResponse>> {
         TODO("Not yet implemented")
     }
 }
