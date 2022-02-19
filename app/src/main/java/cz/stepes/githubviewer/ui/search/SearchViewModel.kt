@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.search
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.stepes.githubviewer.data.remote.GitHubService
@@ -10,9 +11,11 @@ class SearchViewModel(
     private val gitHubService: GitHubService
 ) : ViewModel() {
 
-    fun searchUser(username: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    val isLoading = mutableStateOf(false)
 
+    fun searchUser(username: String) {
+        viewModelScope.launch(Dispatchers.Default) {
+            isLoading.value = true
         }
     }
 }

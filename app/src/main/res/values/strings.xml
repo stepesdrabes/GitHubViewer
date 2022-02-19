@@ -5,5 +5,13 @@
     <string name="landing_text">This app serves as a viewer for GitHub users and their repositories</string>
     <string name="landing_small_text">This page won\'t be shown anymore</string>
     <string name="landing_button_text">Let\'s get started</string>
+
+    <string name="search_placeholder">Enter full username…</string>
+    <string name="search_description">Start by typing username into the text field on the top of the screen</string>
+    <string name="search">Search</string>
+
     <string name="back">Back</string>
+    <string name="no_connection">Oh snap!\nNo connection could be established</string>
+    <string name="error_404">404</string>
+    <string name="not_found">Searched item was not found!</string>
 </resources>
