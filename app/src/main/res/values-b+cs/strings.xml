@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GitHub Viewer</string>
+    <string name="activity_name">GitHub Viewer</string>
+
+    <string name="landing_text">Tato aplikace slouží pro zobrazování detailu profilů GitHubových uživatelů a jejich repozitářů</string>
+    <string name="landing_small_text">Tato stránka se již nebude ukazovat</string>
+    <string name="landing_button_text">Pojďme začít</string>
+    <string name="back">Zpět</string>
+</resources>

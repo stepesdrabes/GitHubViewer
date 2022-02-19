@@ -2,6 +2,18 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'com.google.devtools.ksp' version '1.6.10-1.0.3'
+}
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
 }
 
 android {
@@ -48,11 +60,13 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    def lifecycle_version = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     // Compose
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -69,12 +83,29 @@ dependencies {
     implementation "io.ktor:ktor-client-logging:$ktor_version"
     implementation "ch.qos.logback:logback-classic:1.2.3"
 
-    // Kotlinx serialization
+    // Kotlinx
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2"
 
     // Koin
     def koin_version = "3.1.5"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
+
+    // Coil
+    def coil_version = "1.4.0"
+    implementation "io.coil-kt:coil:$coil_version"
+    implementation "io.coil-kt:coil-compose:$coil_version"
+
+    // Compose destinations
+    def destinations_version = "1.3.1-beta"
+    implementation "io.github.raamcosta.compose-destinations:core:$destinations_version"
+    implementation "io.github.raamcosta.compose-destinations:animations-core:$destinations_version"
+    ksp "io.github.raamcosta.compose-destinations:ksp:$destinations_version"
+
+    implementation "com.google.accompanist:accompanist-coil:0.15.0"
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.23.0"
 }

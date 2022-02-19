@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GitHub Viewer</string>
+    <string name="activity_name">GitHub Viewer</string>
+
+    <string name="landing_text">This app serves as a viewer for GitHub users and their repositories</string>
+    <string name="landing_small_text">This page won\'t be shown anymore</string>
+    <string name="landing_button_text">Let\'s get started</string>
+    <string name="back">Back</string>
 </resources>
