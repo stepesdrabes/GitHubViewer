@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.stepes.githubviewer">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
-        android:name=".GitViewerApp"
+        android:name=".GitHubViewerApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="@string/activity_name"
             android:theme="@style/Theme.GitHubViewer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,5 +23,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
