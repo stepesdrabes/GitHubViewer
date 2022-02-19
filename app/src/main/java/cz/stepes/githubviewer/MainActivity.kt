@@ -1,20 +1,17 @@
 package cz.stepes.githubviewer
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import com.ramcosta.composedestinations.DestinationsNavHost
+import cz.stepes.githubviewer.ui.NavGraphs
+import cz.stepes.githubviewer.ui.test.TestScreen
 import cz.stepes.githubviewer.ui.theme.GitHubViewerTheme
-import cz.stepes.githubviewer.ui.theme.textSize
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +33,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Text(
-                        text = "Jak se máš? :)",
-                        fontSize = MaterialTheme.textSize.title,
-                        fontWeight = FontWeight.ExtraBold
-                    )
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }

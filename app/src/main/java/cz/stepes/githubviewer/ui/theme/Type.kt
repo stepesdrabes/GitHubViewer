@@ -25,10 +25,10 @@ val Typography = Typography(
 )
 
 data class TextSize(
-    val comment: TextUnit = 12.sp,
-    val body: TextUnit = 16.sp,
-    val subtitle: TextUnit = 20.sp,
-    val title: TextUnit = 24.sp,
+    val small: TextUnit = 12.sp,
+    val normal: TextUnit = 16.sp,
+    val medium: TextUnit = 20.sp,
+    val large: TextUnit = 24.sp,
 )
 
 val LocalTextSize = compositionLocalOf { TextSize() }

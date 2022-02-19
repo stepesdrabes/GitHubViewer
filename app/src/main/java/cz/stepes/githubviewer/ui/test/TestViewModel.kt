@@ -4,15 +4,22 @@ import androidx.compose.runtime.mutableStateOf
 import cz.stepes.githubviewer.data.remote.GitHubService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TestViewModel(
     private val gitHubService: GitHubService
 ) : ViewModel() {
 
+    /*sealed class UIState {
+        object Loading : UIState()
+        data class Success(val categoryList: List<Category>) : UIState()
+        object Error : UIState()
+    }*/
+
     val user = mutableStateOf<UserResponse?>(null)
+    val repositories = mutableStateOf<List<RepositoryResponse>?>(null)
     val isLoading = mutableStateOf(false)
     val errorMessage = mutableStateOf<String?>(null)
 
@@ -21,8 +28,9 @@ class TestViewModel(
     }
 
     fun loadUser(username: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             isLoading.value = true
+            user.value = null
             errorMessage.value = null
 
             val result = gitHubService.getUser(username = username)
@@ -34,6 +42,12 @@ class TestViewModel(
 
                 return@launch
             }
+        }
+    }
+
+    fun loadRepos(username: String) {
+        viewModelScope.launch {
+
         }
     }
 }
