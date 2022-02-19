@@ -1,17 +1,18 @@
 package cz.stepes.githubviewer.data.remote.responses
 
-import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserResponse(
     val login: String,
     val id: Int,
+    @SerialName("avatar_url")
     val avatarUrl: String,
     val url: String,
     val name: String?,
     val email: String?,
     val bio: String?,
-    val publicRepos: Int,
-    val createdAt: LocalDateTime
+    @SerialName("public_repos")
+    val publicRepos: Int
 )
