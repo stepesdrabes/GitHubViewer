@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.landing
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -15,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
+import cz.stepes.githubviewer.ui.destinations.SearchScreenDestination
+import cz.stepes.githubviewer.ui.shared.IconLabelButton
 import cz.stepes.githubviewer.ui.theme.spacing
 import cz.stepes.githubviewer.ui.theme.textSize
 
@@ -26,7 +29,7 @@ fun LandingScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = MaterialTheme.spacing.pagePadding)
+            .padding(MaterialTheme.spacing.pagePadding)
     ) {
         Column(
             modifier = Modifier
@@ -62,5 +65,15 @@ fun LandingScreen(
                 textAlign = TextAlign.Center
             )
         }
+
+
+        IconLabelButton(
+            modifier = Modifier.align(Alignment.BottomStart),
+            label = stringResource(id = R.string.landing_button_text),
+            iconId = R.drawable.ic_fi_rr_arrow_right,
+            onClick = {
+                navigator.navigate(SearchScreenDestination())
+            }
+        )
     }
 }
