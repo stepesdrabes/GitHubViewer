@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.ui.shared.components.CircularImage
+import cz.stepes.githubviewer.ui.shared.components.IconInfo
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.LanguageColors
@@ -22,15 +23,14 @@ import cz.stepes.githubviewer.util.LanguageColors
 @ExperimentalMaterialApi
 @Composable
 fun RepositoryItem(
-    repository: RepositoryResponse
+    repository: RepositoryResponse,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         elevation = 0.dp,
-        onClick = {
-
-        },
+        onClick = onClick,
     ) {
         Column(modifier = Modifier.padding(MaterialTheme.spacing.large)) {
             Row(
@@ -75,7 +75,7 @@ fun RepositoryItem(
 
             Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                 if (repository.fork) {
-                    IconText(
+                    IconInfo(
                         iconId = R.drawable.ic_fork,
                         value = stringResource(id = R.string.repository_fork)
                     )

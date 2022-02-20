@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.user
+package cz.stepes.githubviewer.ui.repository
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -19,30 +19,29 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.data.remote.responses.UserResponse
-import cz.stepes.githubviewer.ui.shared.components.CircularImage
+import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
+import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.NotFound
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
-import cz.stepes.githubviewer.ui.user.components.UserContent
 import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
-import org.koin.androidx.compose.viewModel
+import org.koin.androidx.compose.viewModel as viewModel1
 
-@ExperimentalMaterialApi
 @Destination
 @Composable
-fun UserScreen(
+fun RepositoryScreen(
     navigator: DestinationsNavigator,
-    username: String
+    username: String,
+    repositoryName: String
 ) {
-    val viewModel: UserViewModel by viewModel()
+    val viewModel: RepositoryViewModel by viewModel1()
 
-    val userState = produceState<Resource<UserResponse>>(
+    val repositoryState = produceState<Resource<RepositoryResponse>>(
         initialValue = Resource.Loading()
     ) {
-        value = viewModel.getUserInfo(username)
+        value = viewModel.getRepository(username, repositoryName)
     }
 
     val listState = rememberLazyListState()
@@ -79,7 +78,7 @@ fun UserScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex <= 1 || userState.value.data == null
+                                visible = listState.firstVisibleItemIndex <= 1 || repositoryState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -89,7 +88,7 @@ fun UserScreen(
                                 )
                             }
 
-                            userState.value.data?.let {
+                            repositoryState.value.data?.let {
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
@@ -99,23 +98,19 @@ fun UserScreen(
                                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        CircularImage(size = 24.dp, url = it.avatarUrl)
-
                                         Column {
-                                            it.name?.let {
-                                                Text(
-                                                    text = it,
-                                                    fontSize = MaterialTheme.textSize.normal,
-                                                    fontWeight = FontWeight.ExtraBold,
-                                                    color = MaterialTheme.colors.onBackground,
-                                                )
-                                            }
-
                                             Text(
-                                                text = it.login,
+                                                text = it.owner.login,
                                                 fontSize = MaterialTheme.textSize.small,
                                                 fontWeight = FontWeight.Bold,
                                                 color = MaterialTheme.colors.onSurface,
+                                            )
+
+                                            Text(
+                                                text = it.name,
+                                                fontSize = MaterialTheme.textSize.normal,
+                                                fontWeight = FontWeight.ExtraBold,
+                                                color = MaterialTheme.colors.onBackground,
                                             )
                                         }
                                     }
@@ -127,7 +122,7 @@ fun UserScreen(
             )
         },
     ) {
-        when (userState.value) {
+        when (repositoryState.value) {
             is Resource.Loading -> Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -137,7 +132,7 @@ fun UserScreen(
                 )
             }
 
-            is Resource.Error -> userState.value.errorState?.let {
+            is Resource.Error -> repositoryState.value.errorState?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
                     when (it) {
                         ResourceErrorState.NotFound -> NotFound(
@@ -152,10 +147,9 @@ fun UserScreen(
                 }
             }
 
-            is Resource.Success -> userState.value.data?.let {
-                UserContent(
-                    navigator = navigator,
-                    user = it,
+            is Resource.Success -> repositoryState.value.data?.let {
+                RepositoryContent(
+                    repository = it,
                     listState = listState,
                     viewModel = viewModel
                 )

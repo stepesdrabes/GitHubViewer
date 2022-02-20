@@ -9,7 +9,15 @@ interface GitHubService {
 
     suspend fun getUser(username: String): Resource<UserResponse>
 
-    suspend fun getRepositories(username: String): Resource<List<RepositoryResponse>>
+    suspend fun getRepositoriesList(username: String): Resource<List<RepositoryResponse>>
 
-    suspend fun getCommits(username: String, repoName: String): Resource<List<CommitResponse>>
+    suspend fun getRepository(
+        username: String,
+        repositoryName: String
+    ): Resource<RepositoryResponse>
+
+    suspend fun getCommits(
+        username: String,
+        repositoryName: String
+    ): Resource<List<CommitResponse>>
 }

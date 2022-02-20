@@ -33,7 +33,7 @@ class GitHubServiceImpl(
         }
     }
 
-    override suspend fun getRepositories(username: String): Resource<List<RepositoryResponse>> {
+    override suspend fun getRepositoriesList(username: String): Resource<List<RepositoryResponse>> {
         return try {
             Resource.Success(
                 client.get {
@@ -49,8 +49,35 @@ class GitHubServiceImpl(
 
     override suspend fun getCommits(
         username: String,
-        repoName: String
+        repositoryName: String
     ): Resource<List<CommitResponse>> {
-        TODO("Not yet implemented")
+        return try {
+            Resource.Success(
+                client.get {
+                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.COMMITS}")
+                }
+            )
+        } catch (exception: ClientRequestException) {
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
+        } catch (exception: Exception) {
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
+        }
+    }
+
+    override suspend fun getRepository(
+        username: String,
+        repositoryName: String
+    ): Resource<RepositoryResponse> {
+        return try {
+            Resource.Success(
+                client.get {
+                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName")
+                }
+            )
+        } catch (exception: ClientRequestException) {
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
+        } catch (exception: Exception) {
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
+        }
     }
 }

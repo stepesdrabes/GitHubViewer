@@ -15,6 +15,6 @@ class UserViewModel(
     }
 
     suspend fun getUserRepositories(username: String): Resource<List<RepositoryResponse>> {
-        return gitHubService.getRepositories(username)
+        return gitHubService.getRepositoriesList(username)
     }
 }
