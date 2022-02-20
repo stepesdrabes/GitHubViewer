@@ -16,9 +16,13 @@
 
     <string name="repository_fork">fork</string>
     <string name="repository_last_commits">Last commits</string>
+    <string name="repository_watchers">Watchers</string>
     <string name="repository_forks">Forks</string>
     <string name="repository_stars">Stars</string>
     <string name="repository_languages">Languages</string>
+    <string name="repository_branches">Branches</string>
+    <string name="repository_default_branch">default branch</string>
+    <string name="repository_choose_branch">Choose branch</string>
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>

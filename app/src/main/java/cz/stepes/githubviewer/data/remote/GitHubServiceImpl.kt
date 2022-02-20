@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.data.remote
 
+import cz.stepes.githubviewer.data.remote.responses.BranchResponse
 import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
@@ -88,7 +89,7 @@ class GitHubServiceImpl(
         return try {
             Resource.Success(
                 client.get {
-                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/languages")
+                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.LANGUAGES}")
                 }
             )
         } catch (exception: ClientRequestException) {
@@ -97,4 +98,20 @@ class GitHubServiceImpl(
             return Resource.Error(errorState = ResourceErrorState.NetworkError)
         }
     }
+
+    override suspend fun getBranches(
+        username: String,
+        repositoryName: String
+    ): Resource<List<BranchResponse>> {
+        return try {
+            Resource.Success(
+                client.get {
+                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.BRANCHES}")
+                }
+            )
+        } catch (exception: ClientRequestException) {
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
+        } catch (exception: Exception) {
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
+        }    }
 }

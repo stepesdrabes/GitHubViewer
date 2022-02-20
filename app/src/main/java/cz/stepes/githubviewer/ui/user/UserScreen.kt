@@ -79,7 +79,7 @@ fun UserScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex <= 1 || userState.value.data == null
+                                visible = listState.firstVisibleItemIndex < 1 || userState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -93,7 +93,7 @@ fun UserScreen(
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
-                                    visible = listState.firstVisibleItemIndex > 1
+                                    visible = listState.firstVisibleItemIndex >= 1
                                 ) {
                                     Row(
                                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),

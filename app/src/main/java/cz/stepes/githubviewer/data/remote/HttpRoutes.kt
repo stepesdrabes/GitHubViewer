@@ -8,4 +8,8 @@ object HttpRoutes {
 
     const val REPOS = "repos"
     const val COMMITS = "commits"
+    const val LANGUAGES = "languages"
+    const val BRANCHES = "branches"
+
+    const val GITHUB_BASE_URL = "https://github.com"
 }

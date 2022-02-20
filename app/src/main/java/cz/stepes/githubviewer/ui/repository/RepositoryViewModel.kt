@@ -2,6 +2,7 @@ package cz.stepes.githubviewer.ui.repository
 
 import androidx.lifecycle.ViewModel
 import cz.stepes.githubviewer.data.remote.GitHubService
+import cz.stepes.githubviewer.data.remote.responses.BranchResponse
 import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.util.Resource
@@ -29,5 +30,12 @@ class RepositoryViewModel(
         repositoryName: String
     ): Resource<Map<String, Int>> {
         return gitHubService.getLanguages(username, repositoryName)
+    }
+
+    suspend fun getBranches(
+        username: String,
+        repositoryName: String
+    ): Resource<List<BranchResponse>> {
+        return gitHubService.getBranches(username, repositoryName)
     }
 }

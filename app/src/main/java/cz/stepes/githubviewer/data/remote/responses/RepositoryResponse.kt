@@ -11,10 +11,8 @@ data class RepositoryResponse(
     @SerialName("full_name")
     val fullName: String,
     val owner: UserMin,
-    @SerialName("html_url")
-    val htmlUrl: String,
-    @SerialName("languages_url")
-    val languagesUrl: String,
+    @SerialName("default_branch")
+    val defaultBranch: String,
     val fork: Boolean,
     val description: String?,
     val homepage: String?,

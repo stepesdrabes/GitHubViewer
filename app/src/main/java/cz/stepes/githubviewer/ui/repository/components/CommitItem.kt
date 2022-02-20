@@ -35,7 +35,6 @@ fun CommitItem(
                 }
 
                 Text(
-                    // Offset username if there's no avatar available
                     modifier = Modifier.padding(start = if (commit.author == null) MaterialTheme.spacing.textOffset else 0.dp),
                     text = commit.author?.login ?: commit.commit.author.name,
                     fontSize = MaterialTheme.textSize.normal,

@@ -11,11 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
+import cz.stepes.githubviewer.data.remote.HttpRoutes
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
 import cz.stepes.githubviewer.ui.destinations.RepositoryScreenDestination
@@ -39,18 +41,21 @@ fun UserContent(
         value = viewModel.getUserRepositories(user.login)
     }
 
+    val uriHandler = LocalUriHandler.current
+
     LazyColumn(
         state = listState,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = MaterialTheme.spacing.pagePadding)
     ) {
-        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.large)) }
-
-        // User info
+        // Row with user information
         item {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
             UsernameRow(user = user)
         }
 
+        // Biography
         user.bio?.let {
             item {
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
@@ -73,6 +78,7 @@ fun UserContent(
         // Icons with labels
         item { UserInfo(user = user) }
 
+        // Open in browser button
         item {
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
 
@@ -80,15 +86,15 @@ fun UserContent(
                 label = stringResource(id = R.string.open_in_browser),
                 iconId = R.drawable.ic_fi_rr_arrow_right,
                 onClick = {
-                    //uriHandler.openUri(it.url)
+                    uriHandler.openUri("${HttpRoutes.GITHUB_BASE_URL}/${user.login}")
                 }
             )
         }
 
-        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge)) }
-
         // Repositories title
         item {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
+
             Text(
                 modifier = Modifier
                     .fillMaxWidth()

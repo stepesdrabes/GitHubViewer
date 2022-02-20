@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.data.remote
 
+import cz.stepes.githubviewer.data.remote.responses.BranchResponse
 import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
@@ -25,4 +26,9 @@ interface GitHubService {
         username: String,
         repositoryName: String
     ): Resource<Map<String, Int>>
+
+    suspend fun getBranches(
+        username: String,
+        repositoryName: String
+    ): Resource<List<BranchResponse>>
 }

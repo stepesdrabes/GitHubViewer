@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
+import cz.stepes.githubviewer.data.remote.responses.BranchResponse
+import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
+import cz.stepes.githubviewer.ui.repository.components.BranchesSheet
 import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.NotFound
@@ -27,7 +30,7 @@ import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
-import org.koin.androidx.compose.viewModel as viewModel1
+import org.koin.androidx.compose.viewModel
 
 @ExperimentalMaterialApi
 @Destination
@@ -37,7 +40,11 @@ fun RepositoryScreen(
     username: String,
     repositoryName: String
 ) {
-    val viewModel: RepositoryViewModel by viewModel1()
+    val viewModel: RepositoryViewModel by viewModel()
+
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
 
     val repositoryState = produceState<Resource<RepositoryResponse>>(
         initialValue = Resource.Loading()
@@ -45,9 +52,40 @@ fun RepositoryScreen(
         value = viewModel.getRepository(username, repositoryName)
     }
 
+    val branchesState = produceState<Resource<List<BranchResponse>>>(
+        initialValue = Resource.Loading()
+    ) {
+        value = viewModel.getBranches(username, repositoryName)
+    }
+
+    val commitsState = produceState<Resource<List<CommitResponse>>>(
+        initialValue = Resource.Loading()
+    ) {
+        value = viewModel.getCommits(
+            username = username,
+            repositoryName = repositoryName
+        )
+    }
+
+    val languagesState = produceState<Resource<Map<String, Int>>>(
+        initialValue = Resource.Loading()
+    ) {
+        value = viewModel.getLanguages(
+            username = username,
+            repositoryName = repositoryName
+        )
+    }
+
     val listState = rememberLazyListState()
 
-    Scaffold(
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetContent = {
+            repositoryState.value.data?.let {
+                BranchesSheet(branchesState = branchesState, repository = it)
+            }
+        },
+        sheetPeekHeight = 0.dp,
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
@@ -79,7 +117,7 @@ fun RepositoryScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex <= 1 || repositoryState.value.data == null
+                                visible = listState.firstVisibleItemIndex < 1 || repositoryState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -93,7 +131,7 @@ fun RepositoryScreen(
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
-                                    visible = listState.firstVisibleItemIndex > 1
+                                    visible = listState.firstVisibleItemIndex >= 1
                                 ) {
                                     Row(
                                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),
@@ -152,7 +190,9 @@ fun RepositoryScreen(
                 RepositoryContent(
                     repository = it,
                     listState = listState,
-                    viewModel = viewModel
+                    commits = commitsState.value,
+                    languages = languagesState.value,
+                    branches = branchesState.value
                 )
             }
         }
