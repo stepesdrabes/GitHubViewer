@@ -1,10 +1,13 @@
 package cz.stepes.githubviewer.ui.landing
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,6 +23,7 @@ import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 
+@ExperimentalMaterialApi
 @Destination(start = true)
 @Composable
 fun LandingScreen(
@@ -65,12 +69,15 @@ fun LandingScreen(
             )
         }
 
+        val clicked = remember { mutableStateOf(false) }
 
         IconLabelButton(
             modifier = Modifier.align(Alignment.BottomStart),
             label = stringResource(id = R.string.landing_button_text),
             iconId = R.drawable.ic_fi_rr_arrow_right,
+            enabled = !clicked.value,
             onClick = {
+                clicked.value = true
                 navigator.navigate(SearchScreenDestination())
             }
         )

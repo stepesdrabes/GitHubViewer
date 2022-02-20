@@ -9,10 +9,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
-import cz.stepes.githubviewer.ui.shared.components.CircleCroppedImage
+import cz.stepes.githubviewer.ui.shared.components.CircularImage
+import cz.stepes.githubviewer.ui.shared.theme.Nunito
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 
@@ -20,28 +22,38 @@ import cz.stepes.githubviewer.ui.shared.theme.textSize
 fun UsernameRow(
     user: UserResponse
 ) {
+    val titleTextStyle = TextStyle(
+        fontFamily = Nunito,
+        fontSize = MaterialTheme.textSize.large,
+        fontWeight = FontWeight.ExtraBold,
+        color = MaterialTheme.colors.onBackground
+    )
+
+    val subtitleTextStyle = TextStyle(
+        fontFamily = Nunito,
+        fontSize = MaterialTheme.textSize.medium,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colors.onSurface,
+    )
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)
     ) {
-        CircleCroppedImage(size = 96.dp, url = user.avatarUrl)
+        CircularImage(size = 96.dp, url = user.avatarUrl)
 
         Column {
             user.name?.let {
                 Text(
                     text = it,
-                    fontSize = MaterialTheme.textSize.large,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = MaterialTheme.colors.onBackground,
+                    style = titleTextStyle
                 )
             }
 
             Text(
                 text = user.login,
-                fontSize = MaterialTheme.textSize.normal,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.onSurface,
+                style = if (user.name == null) titleTextStyle else subtitleTextStyle
             )
         }
     }

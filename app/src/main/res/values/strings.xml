@@ -10,7 +10,8 @@
     <string name="search_description">Start by typing username into the text field on the top of the screen</string>
     <string name="search">Search</string>
 
-    <string name="user_loading_error">And error has occurred during loading!</string>
+    <string name="user_loading_error">An error has occurred during loading!</string>
+    <string name="user_repositories">Repositories</string>
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>

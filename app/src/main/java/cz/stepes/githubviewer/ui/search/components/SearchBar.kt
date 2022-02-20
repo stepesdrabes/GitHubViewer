@@ -4,13 +4,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
-import cz.stepes.githubviewer.util.KeyboardState
-import cz.stepes.githubviewer.util.keyboardAsState
 
 @Composable
 fun SearchBar(
@@ -42,10 +37,6 @@ fun SearchBar(
     ) {
         val textState = remember { mutableStateOf(TextFieldValue()) }
 
-        val interactionSource = remember { MutableInteractionSource() }
-        val isFocused by interactionSource.collectIsFocusedAsState()
-        val keyboardState by keyboardAsState()
-
         BasicTextField(
             modifier = Modifier
                 .weight(1.0f)
@@ -56,7 +47,7 @@ fun SearchBar(
                 ),
             value = textState.value,
             onValueChange = {
-                if (it.text.length < 39) {
+                if (it.text.length <= 39) {
                     textState.value = it
                 }
 
@@ -88,14 +79,13 @@ fun SearchBar(
 
                     innerTextField()
                 }
-            },
-            interactionSource = interactionSource
+            }
         )
 
         AnimatedVisibility(
             enter = expandHorizontally(),
             exit = shrinkHorizontally(),
-            visible = isFocused && keyboardState == KeyboardState.Opened
+            visible = textState.value.text.isNotEmpty()
         ) {
             Box(modifier = Modifier.width(MaterialTheme.spacing.medium))
         }
@@ -104,7 +94,7 @@ fun SearchBar(
             modifier = Modifier.clip(MaterialTheme.shapes.medium),
             enter = expandHorizontally(),
             exit = shrinkHorizontally(),
-            visible = isFocused && keyboardState == KeyboardState.Opened
+            visible = textState.value.text.isNotEmpty()
         ) {
             Button(
                 modifier = Modifier.size(48.dp),

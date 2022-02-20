@@ -1,9 +1,6 @@
 package cz.stepes.githubviewer.ui.search.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -26,8 +23,9 @@ fun StartSearching(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = MaterialTheme.spacing.extraLarge),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = MaterialTheme.spacing.pagePadding),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraLarge)
     ) {
         Icon(
             modifier = Modifier.size(128.dp),

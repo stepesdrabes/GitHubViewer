@@ -7,12 +7,13 @@
     <string name="landing_button_text">Pojďme začít</string>
 
     <string name="search_placeholder">Zadejte celé uživatelské jméno…</string>
-    <string name="search_description">Začněte zadáním uživatelského jméno do textového pole nahoře</string>
+    <string name="search_description">Začněte zadáním uživatelského jména do textového pole nahoře</string>
     <string name="search">Hledat</string>
 
     <string name="user_loading_error">Nastala chyba při načítání!</string>
+    <string name="user_repositories">Repozitáře</string>
 
-    <string name="back">Back</string>
+    <string name="back">Zpět</string>
     <string name="no_connection">Oops!\nPřipojení k nelze navázat</string>
     <string name="error_404">404</string>
     <string name="not_found">Hledaná položka nebyla nalezena!</string>

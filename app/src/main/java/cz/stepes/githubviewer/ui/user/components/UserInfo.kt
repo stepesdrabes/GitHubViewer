@@ -21,11 +21,13 @@ fun UserInfo(
     val uriHandler = LocalUriHandler.current
 
     Column(modifier = Modifier.fillMaxWidth()) {
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
         UsernameRow(user = user)
 
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-
         user.bio?.let {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+
             Text(
                 modifier = Modifier
                     .fillMaxWidth()

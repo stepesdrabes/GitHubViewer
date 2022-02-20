@@ -2,10 +2,10 @@ package cz.stepes.githubviewer.ui.user
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,13 +17,16 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
+import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.NotFound
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
-import cz.stepes.githubviewer.ui.user.components.UserInfo
+import cz.stepes.githubviewer.ui.user.components.UserContent
 import cz.stepes.githubviewer.util.Resource
+import cz.stepes.githubviewer.util.ResourceErrorState
 import org.koin.androidx.compose.viewModel
 
+@ExperimentalMaterialApi
 @Destination
 @Composable
 fun UserScreen(
@@ -32,7 +35,9 @@ fun UserScreen(
 ) {
     val viewModel: UserViewModel by viewModel()
 
-    val userState = produceState<Resource<UserResponse>>(initialValue = Resource.Loading()) {
+    val userState = produceState<Resource<UserResponse>>(
+        initialValue = Resource.Loading()
+    ) {
         value = viewModel.getUserInfo(username)
     }
 
@@ -40,13 +45,16 @@ fun UserScreen(
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
-                contentPadding = PaddingValues(horizontal = MaterialTheme.spacing.pagePadding),
+                contentPadding = PaddingValues(horizontal = MaterialTheme.spacing.pagePadding / 2),
                 elevation = 0.dp,
                 content = {
                     Row(
-                        modifier = Modifier.clickable {
-                            navigator.navigateUp()
-                        },
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .clickable {
+                                navigator.navigateUp()
+                            }
+                            .padding(horizontal = MaterialTheme.spacing.pagePadding / 2),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -66,37 +74,29 @@ fun UserScreen(
                     }
                 }
             )
-        },
+        }
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            if (userState is Resource.Loading<*>) {
-                CircularProgressIndicator(
+            when (userState.value) {
+                is Resource.Loading -> CircularProgressIndicator(
                     modifier = Modifier
                         .size(100.dp)
                         .align(Alignment.Center),
                     strokeWidth = 2.dp
                 )
 
-                return@Box
-            }
-
-            if (userState is Resource.Error<*>) {
-                NotFound(modifier = Modifier.align(Alignment.Center))
-
-                return@Box
-            }
-
-            userState.value.data?.let {
-                LazyColumn(
-                    modifier = Modifier.padding(horizontal = MaterialTheme.spacing.pagePadding),
-                    content = {
-                        item {
-                            UserInfo(user = it)
-                        }
+                is Resource.Error -> userState.value.errorState?.let {
+                    when (it) {
+                        ResourceErrorState.NotFound -> NotFound(modifier = Modifier.align(Alignment.Center))
+                        ResourceErrorState.NetworkError -> NoConnection(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
-                )
+                }
+
+                is Resource.Success -> userState.value.data?.let { UserContent(user = it) }
             }
         }
     }

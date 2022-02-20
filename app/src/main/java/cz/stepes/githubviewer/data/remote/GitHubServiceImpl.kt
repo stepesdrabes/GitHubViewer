@@ -27,9 +27,9 @@ class GitHubServiceImpl(
                 }
             )
         } catch (exception: ClientRequestException) {
-            return Resource.Error(state = ResourceErrorState.NotFound)
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
         } catch (exception: Exception) {
-            return Resource.Error(state = ResourceErrorState.NetworkError)
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
         }
     }
 
@@ -41,9 +41,9 @@ class GitHubServiceImpl(
                 }
             )
         } catch (exception: ClientRequestException) {
-            return Resource.Error(state = ResourceErrorState.NotFound)
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
         } catch (exception: Exception) {
-            return Resource.Error(state = ResourceErrorState.NetworkError)
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
         }
     }
 

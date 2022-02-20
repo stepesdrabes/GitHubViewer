@@ -14,5 +14,7 @@ data class UserResponse(
     val email: String?,
     val bio: String?,
     @SerialName("public_repos")
-    val publicRepos: Int
+    val publicRepos: Int,
+    @SerialName("followers")
+    val followers: Int
 )

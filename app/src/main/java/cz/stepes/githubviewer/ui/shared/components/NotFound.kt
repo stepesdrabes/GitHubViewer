@@ -23,14 +23,18 @@ fun NotFound(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = MaterialTheme.spacing.extraLarge),
+            .padding(
+                start = MaterialTheme.spacing.pagePadding,
+                end = MaterialTheme.spacing.pagePadding,
+                bottom = MaterialTheme.spacing.pagePadding
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(id = R.string.error_404),
             color = MaterialTheme.colors.onBackground,
             fontSize = 80.sp,
-            fontWeight = FontWeight.Black,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
 

@@ -5,8 +5,8 @@ enum class ResourceErrorState {
     NetworkError
 }
 
-sealed class Resource<T>(val data: T? = null, val message: ResourceErrorState? = null) {
+sealed class Resource<T>(val data: T? = null, val errorState: ResourceErrorState? = null) {
     class Success<T>(data: T) : Resource<T>(data)
-    class Error<T>(state: ResourceErrorState, data: T? = null) : Resource<T>(data, state)
+    class Error<T>(errorState: ResourceErrorState, data: T? = null) : Resource<T>(data, errorState)
     class Loading<T> : Resource<T>()
 }

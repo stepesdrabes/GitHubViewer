@@ -9,7 +9,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 
 @Composable
-fun CircleCroppedImage(
+fun CircularImage(
     size: Dp,
     url: String,
     contentDescription: String? = null
@@ -19,6 +19,8 @@ fun CircleCroppedImage(
         painter = rememberImagePainter(
             data = url,
             builder = {
+                crossfade(true)
+                crossfade(500)
                 transformations(CircleCropTransformation())
             }
         ),
