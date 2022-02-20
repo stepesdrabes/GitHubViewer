@@ -23,4 +23,11 @@ class RepositoryViewModel(
     ): Resource<List<CommitResponse>> {
         return gitHubService.getCommits(username, repositoryName)
     }
+
+    suspend fun getLanguages(
+        username: String,
+        repositoryName: String
+    ): Resource<Map<String, Int>> {
+        return gitHubService.getLanguages(username, repositoryName)
+    }
 }

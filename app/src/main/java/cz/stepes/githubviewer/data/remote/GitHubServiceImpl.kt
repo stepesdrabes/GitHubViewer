@@ -80,4 +80,21 @@ class GitHubServiceImpl(
             return Resource.Error(errorState = ResourceErrorState.NetworkError)
         }
     }
+
+    override suspend fun getLanguages(
+        username: String,
+        repositoryName: String
+    ): Resource<Map<String, Int>> {
+        return try {
+            Resource.Success(
+                client.get {
+                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/languages")
+                }
+            )
+        } catch (exception: ClientRequestException) {
+            return Resource.Error(errorState = ResourceErrorState.NotFound)
+        } catch (exception: Exception) {
+            return Resource.Error(errorState = ResourceErrorState.NetworkError)
+        }
+    }
 }

@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RepositoryUser(
-    val login: String,
-    @SerialName("avatar_url")
-    val avatarUrl: String,
+data class Commit(
+    @SerialName("author")
+    val author: CommitAuthor,
+    val message: String?
 )

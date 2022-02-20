@@ -29,6 +29,7 @@ import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
 import org.koin.androidx.compose.viewModel as viewModel1
 
+@ExperimentalMaterialApi
 @Destination
 @Composable
 fun RepositoryScreen(

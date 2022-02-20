@@ -2,6 +2,7 @@ package cz.stepes.githubviewer.ui.user.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -9,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -89,7 +91,8 @@ fun RepositoryItem(
                             Box(
                                 modifier = Modifier
                                     .size(12.dp)
-                                    .background(color = it, shape = MaterialTheme.shapes.medium)
+                                    .clip(CircleShape)
+                                    .background(color = it)
                             )
 
                             Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))

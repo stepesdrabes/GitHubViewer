@@ -20,4 +20,9 @@ interface GitHubService {
         username: String,
         repositoryName: String
     ): Resource<List<CommitResponse>>
+
+    suspend fun getLanguages(
+        username: String,
+        repositoryName: String
+    ): Resource<Map<String, Int>>
 }

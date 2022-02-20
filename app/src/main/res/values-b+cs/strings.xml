@@ -15,6 +15,10 @@
     <string name="user_followers">Sledující</string>
 
     <string name="repository_fork">fork</string>
+    <string name="repository_last_commits">Poslední commity</string>
+    <string name="repository_forks">Forky</string>
+    <string name="repository_stars">Hvězdy</string>
+    <string name="repository_languages">Jazyky</string>
 
     <string name="back">Zpět</string>
     <string name="no_connection">Oops!\nPřipojení k nelze navázat</string>
