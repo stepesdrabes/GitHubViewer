@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.shared
+package cz.stepes.githubviewer.ui.shared.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import cz.stepes.githubviewer.ui.theme.spacing
-import cz.stepes.githubviewer.ui.theme.textSize
+import cz.stepes.githubviewer.ui.shared.theme.spacing
+import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Composable
 fun IconLabelButton(
@@ -28,18 +27,13 @@ fun IconLabelButton(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val clicked = remember { mutableStateOf(false) }
 
     Button(
         modifier = modifier
-            .height(48.dp)
+            .height(56.dp)
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
-        onClick = {
-            onClick().also {
-                clicked.value = true
-            }
-        },
+        onClick = onClick,
         elevation = ButtonDefaults.elevation(
             defaultElevation = 0.dp,
             focusedElevation = 0.dp,
@@ -65,7 +59,7 @@ fun IconLabelButton(
         AnimatedVisibility(
             enter = expandHorizontally(),
             exit = shrinkHorizontally(),
-            visible = enabled && !isPressed && !clicked.value
+            visible = enabled && !isPressed
         ) {
             Row {
                 Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))

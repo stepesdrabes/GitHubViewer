@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.theme
+package cz.stepes.githubviewer.ui.shared.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
