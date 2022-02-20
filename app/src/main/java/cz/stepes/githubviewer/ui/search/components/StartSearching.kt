@@ -28,7 +28,7 @@ fun StartSearching(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraLarge)
     ) {
         Icon(
-            modifier = Modifier.size(128.dp),
+            modifier = Modifier.size(96.dp),
             painter = painterResource(id = R.drawable.ic_search),
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.app_name)

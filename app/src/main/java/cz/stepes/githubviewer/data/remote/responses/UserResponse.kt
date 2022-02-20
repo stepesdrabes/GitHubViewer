@@ -13,6 +13,9 @@ data class UserResponse(
     val name: String?,
     val email: String?,
     val bio: String?,
+    val location: String?,
+    val company: String?,
+    val blog: String?,
     @SerialName("public_repos")
     val publicRepos: Int,
     @SerialName("followers")

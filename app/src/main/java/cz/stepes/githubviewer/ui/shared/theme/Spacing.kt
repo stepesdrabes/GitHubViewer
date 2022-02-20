@@ -14,7 +14,7 @@ data class Spacing(
     val large: Dp = 20.dp,
     val extraLarge: Dp = 30.dp,
     val pagePadding: Dp = 24.dp,
-    val textOffset: Dp = 2.dp
+    val textOffset: Dp = 4.dp
 )
 
 val LocalSpacing = compositionLocalOf { Spacing() }

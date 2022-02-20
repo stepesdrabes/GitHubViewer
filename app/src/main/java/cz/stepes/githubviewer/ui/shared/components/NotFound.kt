@@ -33,7 +33,7 @@ fun NotFound(
         Text(
             text = stringResource(id = R.string.error_404),
             color = MaterialTheme.colors.onBackground,
-            fontSize = 80.sp,
+            fontSize = 72.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
