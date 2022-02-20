@@ -1,8 +1,6 @@
 package cz.stepes.githubviewer.ui.search
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -23,7 +21,7 @@ import cz.stepes.githubviewer.ui.shared.theme.spacing
 fun SearchScreen(
     navigator: DestinationsNavigator
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(MaterialTheme.spacing.pagePadding)
@@ -37,6 +35,12 @@ fun SearchScreen(
             }
         )
 
-        StartSearching(modifier = Modifier.align(Alignment.Center))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f)
+        ) {
+            StartSearching(modifier = Modifier.align(Alignment.Center))
+        }
     }
 }

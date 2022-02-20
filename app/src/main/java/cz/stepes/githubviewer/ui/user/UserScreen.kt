@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -67,6 +68,7 @@ fun UserScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxHeight()
+                            .clip(MaterialTheme.shapes.medium)
                             .clickable {
                                 navigator.navigateUp()
                             }
@@ -210,7 +212,7 @@ fun UserScreen(
 
                     item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge)) }
 
-                    // Repos title
+                    // Repositories title
                     item {
                         Text(
                             modifier = Modifier
@@ -225,6 +227,7 @@ fun UserScreen(
 
                     item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium)) }
 
+                    // Repositories
                     when (repositoriesState.value) {
                         is Resource.Loading -> item {
                             Box(modifier = Modifier.fillMaxWidth()) {
