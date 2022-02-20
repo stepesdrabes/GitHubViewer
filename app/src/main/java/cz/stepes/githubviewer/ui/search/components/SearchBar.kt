@@ -33,7 +33,7 @@ fun SearchBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(48.dp),
+            .height(56.dp),
     ) {
         val textState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -97,14 +97,14 @@ fun SearchBar(
             visible = textState.value.text.isNotEmpty()
         ) {
             Button(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(56.dp),
                 onClick = {
                     onSearch(textState.value.text)
                 },
                 shape = MaterialTheme.shapes.medium
             ) {
                 Icon(
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(MaterialTheme.spacing.large),
                     painter = painterResource(id = R.drawable.ic_fi_rr_search),
                     contentDescription = stringResource(id = R.string.search)
                 )

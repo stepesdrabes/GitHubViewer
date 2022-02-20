@@ -30,7 +30,7 @@ fun IconLabelButton(
 
     Button(
         modifier = modifier
-            .height(48.dp)
+            .height(56.dp)
             .fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         onClick = onClick,
