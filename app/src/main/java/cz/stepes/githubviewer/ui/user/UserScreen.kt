@@ -28,6 +28,7 @@ import cz.stepes.githubviewer.ui.shared.components.NotFound
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.ui.user.components.RepositoryItem
+import cz.stepes.githubviewer.ui.user.components.UserInfo
 import cz.stepes.githubviewer.ui.user.components.UsernameRow
 import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
@@ -133,7 +134,7 @@ fun UserScreen(
                     }
                 }
             )
-        }
+        },
     ) {
         when (userState.value) {
             is Resource.Loading -> Box(modifier = Modifier.fillMaxSize()) {
@@ -192,33 +193,8 @@ fun UserScreen(
                         }
                     }
 
-                    /*if (!it.email.isNullOrEmpty() || !it.company.isNullOrEmpty() || !it.location.isNullOrEmpty() || !it.blog.isNullOrEmpty()) {
-                        item {
-                            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-
-                            Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)) {
-                                it.email?.let {
-                                    Row(
-                                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_fi_br_arrow_left),
-                                            tint = MaterialTheme.colors.onSurface,
-                                            contentDescription = stringResource(id = R.string.back)
-                                        )
-
-                                        Text(
-                                            text = it,
-                                            fontSize = MaterialTheme.textSize.normal,
-                                            fontWeight = FontWeight.Bold,
-                                            color = MaterialTheme.colors.onBackground,
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }*/
+                    // Icons with labels
+                    item { UserInfo(user = it) }
 
                     item {
                         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
@@ -272,6 +248,8 @@ fun UserScreen(
                                         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
                                     }
                                 }
+
+                                item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.large)) }
                             }
                         }
                     }

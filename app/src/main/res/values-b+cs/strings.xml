@@ -12,6 +12,9 @@
 
     <string name="user_loading_error">Nastala chyba při načítání!</string>
     <string name="user_repositories">Repozitáře</string>
+    <string name="user_followers">Sledující</string>
+
+    <string name="repository_fork">fork</string>
 
     <string name="back">Zpět</string>
     <string name="no_connection">Oops!\nPřipojení k nelze navázat</string>

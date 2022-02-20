@@ -12,6 +12,9 @@
 
     <string name="user_loading_error">An error has occurred during loading!</string>
     <string name="user_repositories">Repositories</string>
+    <string name="user_followers">Followers</string>
+
+    <string name="repository_fork">fork</string>
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>

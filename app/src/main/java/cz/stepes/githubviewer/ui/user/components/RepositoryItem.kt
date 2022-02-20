@@ -9,8 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.ui.shared.components.CircularImage
 import cz.stepes.githubviewer.ui.shared.theme.spacing
@@ -67,29 +69,40 @@ fun RepositoryItem(
                 )
             }
 
-            repository.language?.let {
+            if (repository.language != null || repository.fork) {
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            }
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    val color = LanguageColors.getLanguageColor(repository.language)
-
-                    color?.let {
-                        Box(
-                            modifier = Modifier
-                                .size(12.dp)
-                                .background(color = it, shape = MaterialTheme.shapes.medium)
-                        )
-
-                        Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-                    }
-
-                    Text(
-                        modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                        text = it,
-                        fontSize = MaterialTheme.textSize.medium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.onBackground
+            Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
+                if (repository.fork) {
+                    IconText(
+                        iconId = R.drawable.ic_fork,
+                        value = stringResource(id = R.string.repository_fork)
                     )
+                }
+
+                repository.language?.let {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        val color = LanguageColors.getLanguageColor(repository.language)
+
+                        color?.let {
+                            Box(
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .background(color = it, shape = MaterialTheme.shapes.medium)
+                            )
+
+                            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+                        }
+
+                        Text(
+                            modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+                            text = it,
+                            fontSize = MaterialTheme.textSize.medium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colors.onBackground
+                        )
+                    }
                 }
             }
         }
