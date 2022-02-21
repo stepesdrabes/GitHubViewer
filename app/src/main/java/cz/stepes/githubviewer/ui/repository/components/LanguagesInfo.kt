@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,42 +19,24 @@ import cz.stepes.githubviewer.util.LanguageColors
 import kotlin.math.roundToInt
 
 @Composable
-fun LanguagesBar(
+fun LanguagesInfo(
     languages: Map<String, Int>
 ) {
-    val totalSize = languages.values.sum()
-    val orderedLanguages = languages.toSortedMap(compareByDescending { languages[it] })
+    val totalSize = remember { languages.values.sum() }
+    val orderedLanguages = remember { languages.toSortedMap(compareByDescending { languages[it] }) }
 
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(16.dp)
-                .clip(MaterialTheme.shapes.medium)
-        ) {
-            orderedLanguages.forEach { language ->
-                val color = LanguageColors.getLanguageColor(language.key)
-                    ?: MaterialTheme.colors.primary
+    Column(
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large)
+    ) {
+        LanguagesBar(totalSize, orderedLanguages)
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(language.value.toFloat() / totalSize.toFloat())
-                        .background(color)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-
+        // Individual languages
         FlowRow(
             mainAxisSpacing = MaterialTheme.spacing.extraLarge,
             crossAxisSpacing = MaterialTheme.spacing.small
         ) {
             orderedLanguages.forEach {
-                val color = LanguageColors.getLanguageColor(it.key)
-                    ?: MaterialTheme.colors.primary
-
+                val languageColor = LanguageColors.getLanguageColor(it.key)
                 val percentage = (it.value.toDouble() / totalSize.toDouble() * 100).roundToInt()
 
                 Row(
@@ -64,7 +47,7 @@ fun LanguagesBar(
                         modifier = Modifier
                             .size(12.dp)
                             .clip(CircleShape)
-                            .background(color = color)
+                            .background(color = languageColor)
                     )
 
                     Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
@@ -88,6 +71,30 @@ fun LanguagesBar(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun LanguagesBar(
+    totalSize: Int,
+    orderedLanguages: Map<String, Int>
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp)
+            .clip(MaterialTheme.shapes.medium)
+    ) {
+        orderedLanguages.forEach { language ->
+            val color = LanguageColors.getLanguageColor(language.key)
+
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(language.value.toFloat() / totalSize.toFloat())
+                    .background(color)
+            )
         }
     }
 }

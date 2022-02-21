@@ -102,7 +102,7 @@ fun RepositoryContent(
 
                         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
-                        LanguagesBar(languages = it)
+                        LanguagesInfo(languages = it)
                     }
                 }
             }
