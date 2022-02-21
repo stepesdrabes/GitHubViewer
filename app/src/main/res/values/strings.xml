@@ -3,14 +3,13 @@
     <string name="activity_name">GitHub Viewer</string>
 
     <string name="landing_text">This app serves as a viewer for GitHub users and their repositories</string>
-    <string name="landing_small_text">This page won\'t be shown anymore</string>
     <string name="landing_button_text">Let\'s get started</string>
 
     <string name="search_placeholder">Enter full username…</string>
     <string name="search_description">Start by typing username into the text field on the top of the screen</string>
     <string name="search">Search</string>
 
-    <string name="user_loading_error">An error has occurred during loading!</string>
+    <string name="user_loading_error">An error has occurred during loading</string>
     <string name="user_repositories">Repositories</string>
     <string name="user_followers">Followers</string>
 
@@ -26,7 +25,7 @@
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>
-    <string name="not_found">Searched item was not found!</string>
-    <string name="rate_limited">You are being rate limited! Thank you, GitHub public API.</string>
+    <string name="not_found">Searched item was not found</string>
+    <string name="rate_limited">Not so quick! You are being rate limited.\nThank you, GitHub public API ❤️</string>
     <string name="open_in_browser">Open up in browser</string>
 </resources>

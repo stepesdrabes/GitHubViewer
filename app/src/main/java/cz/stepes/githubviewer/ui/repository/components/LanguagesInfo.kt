@@ -38,7 +38,7 @@ fun LanguagesInfo(
             orderedLanguages.forEach {
                 val languageColor = LanguageColors.getLanguageColor(it.key)
 
-                val decimalFormat = DecimalFormat("#s.#")
+                val decimalFormat = DecimalFormat("#.#")
                 val percentage = decimalFormat.format(
                     it.value.toDouble() / totalSize.toDouble() * 100
                 )

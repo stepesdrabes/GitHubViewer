@@ -2,9 +2,7 @@ package cz.stepes.githubviewer.ui.repository.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,9 +14,11 @@ import cz.stepes.githubviewer.ui.shared.components.IconInfo
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 
+@ExperimentalMaterialApi
 @Composable
 fun CurrentBranch(
     repository: RepositoryResponse,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large)) {
         Divider(color = MaterialTheme.colors.surface, thickness = 1.dp)

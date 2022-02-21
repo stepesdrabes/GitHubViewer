@@ -11,7 +11,7 @@ object StringUtil {
         return false
     }
 
-    fun isValid(string: String?): Boolean {
+    private fun isValid(string: String?): Boolean {
         return string != null && string.isNotEmpty() && string.isNotBlank()
     }
 

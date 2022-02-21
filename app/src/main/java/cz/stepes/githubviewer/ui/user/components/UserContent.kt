@@ -22,6 +22,7 @@ import cz.stepes.githubviewer.data.remote.HttpRoutes
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
 import cz.stepes.githubviewer.ui.destinations.RepositoryScreenDestination
 import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
+import cz.stepes.githubviewer.ui.shared.components.LinkifyText
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.ui.user.UserViewModel
@@ -55,7 +56,7 @@ fun UserContent(
             item {
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
 
-                Text(
+                LinkifyText(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(

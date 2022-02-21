@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +18,7 @@ import cz.stepes.githubviewer.data.remote.HttpRoutes
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.ui.repository.RepositoryViewModel
 import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
+import cz.stepes.githubviewer.ui.shared.components.LinkifyText
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.Resource
@@ -31,7 +29,8 @@ import cz.stepes.githubviewer.util.Resource
 fun RepositoryContent(
     repository: RepositoryResponse,
     listState: LazyListState,
-    viewModel: RepositoryViewModel
+    viewModel: RepositoryViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -53,7 +52,7 @@ fun RepositoryContent(
             item {
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraSmall))
 
-                Text(
+                LinkifyText(
                     modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
                     text = it,
                     fontSize = MaterialTheme.textSize.normal,
@@ -141,7 +140,12 @@ fun RepositoryContent(
                 is Resource.Error -> Text(text = stringResource(id = R.string.user_loading_error))
 
                 is Resource.Success -> {
-                    viewModel.branchesState.value.data?.let { CurrentBranch(repository = repository) }
+                    viewModel.branchesState.value.data?.let {
+                        CurrentBranch(
+                            repository = repository,
+                            bottomSheetScaffoldState = bottomSheetScaffoldState
+                        )
+                    }
                 }
             }
         }

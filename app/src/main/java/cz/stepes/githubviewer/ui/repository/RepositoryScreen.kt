@@ -40,6 +40,10 @@ fun RepositoryScreen(
 ) {
     val viewModel: RepositoryViewModel by viewModel()
 
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
+
     LaunchedEffect(
         key1 = username,
         key2 = repositoryName,
@@ -160,7 +164,8 @@ fun RepositoryScreen(
                 RepositoryContent(
                     repository = it,
                     listState = listState,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    bottomSheetScaffoldState = bottomSheetScaffoldState
                 )
             }
         }
