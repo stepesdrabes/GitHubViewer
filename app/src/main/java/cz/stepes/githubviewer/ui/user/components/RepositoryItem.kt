@@ -87,16 +87,14 @@ fun RepositoryItem(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         val color = LanguageColors.getLanguageColor(repository.language)
 
-                        color?.let {
-                            Box(
-                                modifier = Modifier
-                                    .size(12.dp)
-                                    .clip(CircleShape)
-                                    .background(color = it)
-                            )
+                        Box(
+                            modifier = Modifier
+                                .size(12.dp)
+                                .clip(CircleShape)
+                                .background(color = color)
+                        )
 
-                            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-                        }
+                        Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
 
                         Text(
                             modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),

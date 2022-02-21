@@ -8,7 +8,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -18,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.remote.HttpRoutes
-import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
 import cz.stepes.githubviewer.ui.destinations.RepositoryScreenDestination
 import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
@@ -35,12 +33,6 @@ fun UserContent(
     listState: LazyListState,
     viewModel: UserViewModel
 ) {
-    val repositoriesState = produceState<Resource<List<RepositoryResponse>>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getUserRepositories(user.login)
-    }
-
     val uriHandler = LocalUriHandler.current
 
     LazyColumn(
@@ -109,7 +101,7 @@ fun UserContent(
         item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium)) }
 
         // Repositories
-        when (repositoriesState.value) {
+        when (viewModel.repositoriesState.value) {
             is Resource.Loading -> item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     CircularProgressIndicator(
@@ -124,7 +116,7 @@ fun UserContent(
             is Resource.Error -> item { Text(text = stringResource(id = R.string.user_loading_error)) }
 
             is Resource.Success -> {
-                repositoriesState.value.data?.let {
+                viewModel.repositoriesState.value.data?.let {
                     items(count = it.size) { index ->
                         val repository = it[index]
 

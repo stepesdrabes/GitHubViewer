@@ -16,9 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.remote.HttpRoutes
-import cz.stepes.githubviewer.data.remote.responses.BranchResponse
-import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
+import cz.stepes.githubviewer.ui.repository.RepositoryViewModel
 import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
@@ -29,9 +28,7 @@ import cz.stepes.githubviewer.util.Resource
 fun RepositoryContent(
     repository: RepositoryResponse,
     listState: LazyListState,
-    branches: Resource<List<BranchResponse>>,
-    languages: Resource<Map<String, Int>>,
-    commits: Resource<List<CommitResponse>>,
+    viewModel: RepositoryViewModel
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -67,26 +64,15 @@ fun RepositoryContent(
         item {
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-            RepoInfo(repository = repository, branchesState = branches)
+            RepoInfo(repository = repository, branchesState = viewModel.branchesState.value)
         }
 
         // Languages
         if (repository.language != null) {
-            item {
-                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-                Text(
-                    modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                    text = stringResource(id = R.string.repository_languages),
-                    fontSize = MaterialTheme.textSize.medium,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = MaterialTheme.colors.onBackground
-                )
-
-                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
-
-                when (languages) {
-                    is Resource.Loading -> Box(modifier = Modifier.fillMaxWidth()) {
+            when (viewModel.languagesState.value) {
+                is Resource.Loading -> item {
+                    Box(modifier = Modifier.fillMaxWidth()) {
                         CircularProgressIndicator(
                             modifier = Modifier
                                 .size(50.dp)
@@ -94,10 +80,30 @@ fun RepositoryContent(
                             strokeWidth = 2.dp,
                         )
                     }
+                }
 
-                    is Resource.Error -> Text(text = stringResource(id = R.string.user_loading_error))
+                is Resource.Error -> item {
+                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-                    is Resource.Success -> languages.data?.let { LanguagesBar(languages = it) }
+                    Text(text = stringResource(id = R.string.user_loading_error))
+                }
+
+                is Resource.Success -> viewModel.languagesState.value.data?.let {
+                    item {
+                        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
+                        Text(
+                            modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+                            text = stringResource(id = R.string.repository_languages),
+                            fontSize = MaterialTheme.textSize.medium,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = MaterialTheme.colors.onBackground
+                        )
+
+                        Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+
+                        LanguagesBar(languages = it)
+                    }
                 }
             }
         }
@@ -119,7 +125,7 @@ fun RepositoryContent(
         item {
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-            when (branches) {
+            when (viewModel.branchesState.value) {
                 is Resource.Loading -> Box(modifier = Modifier.fillMaxWidth()) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -132,12 +138,7 @@ fun RepositoryContent(
                 is Resource.Error -> Text(text = stringResource(id = R.string.user_loading_error))
 
                 is Resource.Success -> {
-                    branches.data?.let {
-                        CurrentBranch(
-                            repository = repository,
-                            currentBranch = repository.defaultBranch
-                        )
-                    }
+                    viewModel.branchesState.value.data?.let { CurrentBranch(repository = repository) }
                 }
             }
         }
@@ -156,7 +157,7 @@ fun RepositoryContent(
         }
 
         // Commits
-        when (commits) {
+        when (viewModel.commitsState.value) {
             is Resource.Loading -> item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     CircularProgressIndicator(
@@ -171,7 +172,7 @@ fun RepositoryContent(
             is Resource.Error -> item { Text(text = stringResource(id = R.string.user_loading_error)) }
 
             is Resource.Success -> {
-                commits.data?.let {
+                viewModel.commitsState.value.data?.let {
                     item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium)) }
 
                     items(count = if (it.size < 10) it.size else 10) { index ->

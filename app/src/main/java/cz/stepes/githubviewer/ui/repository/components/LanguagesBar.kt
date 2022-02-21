@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowRow
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.LanguageColors
@@ -45,7 +46,10 @@ fun LanguagesBar(
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-        Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
+        FlowRow(
+            mainAxisSpacing = MaterialTheme.spacing.extraLarge,
+            crossAxisSpacing = MaterialTheme.spacing.small
+        ) {
             orderedLanguages.forEach {
                 val color = LanguageColors.getLanguageColor(it.key)
                     ?: MaterialTheme.colors.primary

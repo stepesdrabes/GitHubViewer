@@ -4,6 +4,7 @@ import android.content.res.Resources
 import androidx.compose.ui.graphics.Color
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.data.models.LanguageColor
+import cz.stepes.githubviewer.ui.shared.theme.HighlightBlue
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -21,18 +22,14 @@ object LanguageColors {
             it.readText()
         }
 
-        colors = formatter.decodeFromString<Map<String, LanguageColor>>(string = text)
+        colors = formatter.decodeFromString(string = text)
     }
 
-    fun getLanguageColor(language: String): Color? {
+    fun getLanguageColor(language: String): Color {
         colors[language]?.let {
-            if (it.color == null) {
-                return null
-            }
-
             return Color(android.graphics.Color.parseColor(it.color))
         }
 
-        return null
+        return HighlightBlue
     }
 }

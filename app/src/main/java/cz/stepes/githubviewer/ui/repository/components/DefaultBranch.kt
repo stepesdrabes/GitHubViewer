@@ -18,8 +18,7 @@ import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Composable
 fun CurrentBranch(
-    repository: RepositoryResponse?,
-    currentBranch: String
+    repository: RepositoryResponse,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large)) {
         Divider(color = MaterialTheme.colors.surface, thickness = 1.dp)
@@ -28,16 +27,14 @@ fun CurrentBranch(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.textOffset)
         ) {
-            IconInfo(iconId = R.drawable.ic_branch, value = currentBranch)
+            IconInfo(iconId = R.drawable.ic_branch, value = repository.defaultBranch)
 
-            if (repository?.defaultBranch == currentBranch) {
-                Text(
-                    text = stringResource(id = R.string.repository_default_branch),
-                    fontSize = MaterialTheme.textSize.normal,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colors.onSurface
-                )
-            }
+            Text(
+                text = stringResource(id = R.string.repository_default_branch),
+                fontSize = MaterialTheme.textSize.normal,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colors.onSurface
+            )
 
             Spacer(modifier = Modifier.weight(1.0f))
 
@@ -45,7 +42,7 @@ fun CurrentBranch(
                 modifier = Modifier.clickable {
 
                 },
-                text = stringResource(id = R.string.repository_choose_branch),
+                text = stringResource(id = R.string.repository_view_branches),
                 fontSize = MaterialTheme.textSize.normal,
                 fontWeight = FontWeight.ExtraBold,
                 color = MaterialTheme.colors.primary

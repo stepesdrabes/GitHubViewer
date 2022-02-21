@@ -17,7 +17,10 @@ fun RepoInfo(
     repository: RepositoryResponse,
     branchesState: Resource<List<BranchResponse>>
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)) {
+    Column(
+        modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)
+    ) {
         repository.homepage?.let { IconInfo(iconId = R.drawable.ic_fi_rr_link, value = it) }
 
         IconInfo(

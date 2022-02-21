@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,10 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.data.remote.responses.BranchResponse
-import cz.stepes.githubviewer.data.remote.responses.CommitResponse
-import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
-import cz.stepes.githubviewer.ui.repository.components.BranchesSheet
 import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.NotFound
@@ -42,50 +38,17 @@ fun RepositoryScreen(
 ) {
     val viewModel: RepositoryViewModel by viewModel()
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    LaunchedEffect(
+        key1 = username,
+        key2 = repositoryName,
+        block = {
+            viewModel.getRepositoryInfo(username, repositoryName)
+        }
     )
-
-    val repositoryState = produceState<Resource<RepositoryResponse>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getRepository(username, repositoryName)
-    }
-
-    val branchesState = produceState<Resource<List<BranchResponse>>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getBranches(username, repositoryName)
-    }
-
-    val commitsState = produceState<Resource<List<CommitResponse>>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getCommits(
-            username = username,
-            repositoryName = repositoryName
-        )
-    }
-
-    val languagesState = produceState<Resource<Map<String, Int>>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getLanguages(
-            username = username,
-            repositoryName = repositoryName
-        )
-    }
 
     val listState = rememberLazyListState()
 
-    BottomSheetScaffold(
-        scaffoldState = bottomSheetScaffoldState,
-        sheetContent = {
-            repositoryState.value.data?.let {
-                BranchesSheet(branchesState = branchesState, repository = it)
-            }
-        },
-        sheetPeekHeight = 0.dp,
+    Scaffold(
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
@@ -117,7 +80,7 @@ fun RepositoryScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex < 1 || repositoryState.value.data == null
+                                visible = listState.firstVisibleItemIndex < 1 || viewModel.repositoryState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -127,7 +90,7 @@ fun RepositoryScreen(
                                 )
                             }
 
-                            repositoryState.value.data?.let {
+                            viewModel.repositoryState.value.data?.let {
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
@@ -161,7 +124,7 @@ fun RepositoryScreen(
             )
         },
     ) {
-        when (repositoryState.value) {
+        when (viewModel.repositoryState.value) {
             is Resource.Loading -> Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -171,7 +134,7 @@ fun RepositoryScreen(
                 )
             }
 
-            is Resource.Error -> repositoryState.value.errorState?.let {
+            is Resource.Error -> viewModel.repositoryState.value.errorState?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
                     when (it) {
                         ResourceErrorState.NotFound -> NotFound(
@@ -186,13 +149,11 @@ fun RepositoryScreen(
                 }
             }
 
-            is Resource.Success -> repositoryState.value.data?.let {
+            is Resource.Success -> viewModel.repositoryState.value.data?.let {
                 RepositoryContent(
                     repository = it,
                     listState = listState,
-                    commits = commitsState.value,
-                    languages = languagesState.value,
-                    branches = branchesState.value
+                    viewModel = viewModel
                 )
             }
         }

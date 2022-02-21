@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.data.remote.responses.UserResponse
 import cz.stepes.githubviewer.ui.shared.components.CircularImage
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.NotFound
@@ -39,11 +38,12 @@ fun UserScreen(
 ) {
     val viewModel: UserViewModel by viewModel()
 
-    val userState = produceState<Resource<UserResponse>>(
-        initialValue = Resource.Loading()
-    ) {
-        value = viewModel.getUserInfo(username)
-    }
+    LaunchedEffect(
+        key1 = username,
+        block = {
+            viewModel.loadUserInfo(username)
+        }
+    )
 
     val listState = rememberLazyListState()
 
@@ -79,7 +79,7 @@ fun UserScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex < 1 || userState.value.data == null
+                                visible = listState.firstVisibleItemIndex < 1 || viewModel.userState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -89,7 +89,7 @@ fun UserScreen(
                                 )
                             }
 
-                            userState.value.data?.let {
+                            viewModel.userState.value.data?.let {
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
@@ -127,7 +127,7 @@ fun UserScreen(
             )
         },
     ) {
-        when (userState.value) {
+        when (viewModel.userState.value) {
             is Resource.Loading -> Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -137,7 +137,7 @@ fun UserScreen(
                 )
             }
 
-            is Resource.Error -> userState.value.errorState?.let {
+            is Resource.Error -> viewModel.userState.value.errorState?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
                     when (it) {
                         ResourceErrorState.NotFound -> NotFound(
@@ -152,7 +152,7 @@ fun UserScreen(
                 }
             }
 
-            is Resource.Success -> userState.value.data?.let {
+            is Resource.Success -> viewModel.userState.value.data?.let {
                 UserContent(
                     navigator = navigator,
                     user = it,
