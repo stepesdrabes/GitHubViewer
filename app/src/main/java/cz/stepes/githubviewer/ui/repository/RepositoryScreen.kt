@@ -1,4 +1,4 @@
-package cz.stepes.githubviewer.ui.user
+package cz.stepes.githubviewer.ui.repository
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.ui.shared.components.CircularImage
+import cz.stepes.githubviewer.ui.repository.components.BranchesSheet
+import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.ErrorCode
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
-import cz.stepes.githubviewer.ui.user.components.UserContent
 import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
 import org.koin.androidx.compose.viewModel
@@ -34,22 +34,34 @@ import org.koin.androidx.compose.viewModel
 @ExperimentalMaterialApi
 @Destination
 @Composable
-fun UserScreen(
+fun RepositoryScreen(
     navigator: DestinationsNavigator,
-    username: String
+    username: String,
+    repositoryName: String
 ) {
-    val viewModel: UserViewModel by viewModel()
+    val viewModel: RepositoryViewModel by viewModel()
+
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
+    )
 
     LaunchedEffect(
         key1 = username,
+        key2 = repositoryName,
         block = {
-            viewModel.loadUserInfo(username)
+            viewModel.getRepositoryInfo(username, repositoryName)
         }
     )
 
     val listState = rememberLazyListState()
 
-    Scaffold(
+    BottomSheetScaffold(
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        scaffoldState = bottomSheetScaffoldState,
+        sheetContent = {
+            BranchesSheet(viewModel = viewModel)
+        },
+        sheetPeekHeight = 0.dp,
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
@@ -81,7 +93,7 @@ fun UserScreen(
                             AnimatedVisibility(
                                 enter = expandVertically(expandFrom = Alignment.Bottom),
                                 exit = shrinkVertically(shrinkTowards = Alignment.Bottom),
-                                visible = listState.firstVisibleItemIndex < 1 || viewModel.userState.value.data == null
+                                visible = listState.firstVisibleItemIndex < 1 || viewModel.repositoryState.value.data == null
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.back),
@@ -91,7 +103,7 @@ fun UserScreen(
                                 )
                             }
 
-                            viewModel.userState.value.data?.let {
+                            viewModel.repositoryState.value.data?.let {
                                 AnimatedVisibility(
                                     enter = expandVertically(expandFrom = Alignment.Top),
                                     exit = shrinkVertically(shrinkTowards = Alignment.Top),
@@ -101,23 +113,19 @@ fun UserScreen(
                                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        CircularImage(size = 24.dp, url = it.avatarUrl)
-
                                         Column {
-                                            it.name?.let {
-                                                Text(
-                                                    text = it,
-                                                    fontSize = MaterialTheme.textSize.normal,
-                                                    fontWeight = FontWeight.ExtraBold,
-                                                    color = MaterialTheme.colors.onBackground,
-                                                )
-                                            }
-
                                             Text(
-                                                text = it.login,
+                                                text = it.owner.login,
                                                 fontSize = MaterialTheme.textSize.small,
                                                 fontWeight = FontWeight.Bold,
                                                 color = MaterialTheme.colors.onSurface,
+                                            )
+
+                                            Text(
+                                                text = it.name,
+                                                fontSize = MaterialTheme.textSize.normal,
+                                                fontWeight = FontWeight.ExtraBold,
+                                                color = MaterialTheme.colors.onBackground,
                                             )
                                         }
                                     }
@@ -129,7 +137,7 @@ fun UserScreen(
             )
         },
     ) {
-        when (viewModel.userState.value) {
+        when (viewModel.repositoryState.value) {
             is Resource.Loading -> Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -139,7 +147,7 @@ fun UserScreen(
                 )
             }
 
-            is Resource.Error -> viewModel.userState.value.errorState?.let {
+            is Resource.Error -> viewModel.repositoryState.value.errorState?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
                     when (it) {
                         ResourceErrorState.RateLimited -> ErrorCode(
@@ -159,12 +167,12 @@ fun UserScreen(
                 }
             }
 
-            is Resource.Success -> viewModel.userState.value.data?.let {
-                UserContent(
-                    navigator = navigator,
-                    user = it,
+            is Resource.Success -> viewModel.repositoryState.value.data?.let {
+                RepositoryContent(
+                    repository = it,
                     listState = listState,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    bottomSheetScaffoldState = bottomSheetScaffoldState
                 )
             }
         }

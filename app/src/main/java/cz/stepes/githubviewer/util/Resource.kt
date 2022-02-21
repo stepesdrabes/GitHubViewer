@@ -2,7 +2,8 @@ package cz.stepes.githubviewer.util
 
 enum class ResourceErrorState {
     NotFound,
-    NetworkError
+    NetworkError,
+    RateLimited
 }
 
 sealed class Resource<T>(val data: T? = null, val errorState: ResourceErrorState? = null) {

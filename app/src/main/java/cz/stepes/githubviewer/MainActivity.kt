@@ -3,6 +3,7 @@ package cz.stepes.githubviewer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -14,6 +15,7 @@ import cz.stepes.githubviewer.ui.NavGraphs
 import cz.stepes.githubviewer.ui.shared.theme.GitHubViewerTheme
 import cz.stepes.githubviewer.util.LanguageColors
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

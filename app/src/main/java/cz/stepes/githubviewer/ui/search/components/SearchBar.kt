@@ -6,6 +6,7 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +39,13 @@ fun SearchBar(
         val textState = remember { mutableStateOf(TextFieldValue()) }
 
         BasicTextField(
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (textState.value.text.isNotEmpty()) {
+                        onSearch(textState.value.text.trim())
+                    }
+                }
+            ),
             modifier = Modifier
                 .weight(1.0f)
                 .fillMaxHeight()
@@ -99,7 +107,7 @@ fun SearchBar(
             Button(
                 modifier = Modifier.size(56.dp),
                 onClick = {
-                    onSearch(textState.value.text)
+                    onSearch(textState.value.text.trim())
                 },
                 shape = MaterialTheme.shapes.medium
             ) {

@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.landing
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -23,6 +24,7 @@ import cz.stepes.githubviewer.ui.shared.components.IconLabelButton
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Destination(start = true)
 @Composable
