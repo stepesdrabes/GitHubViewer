@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.shared.components
 
+import android.util.Patterns
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -18,7 +19,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import cz.stepes.githubviewer.ui.shared.theme.textSize
-import java.util.regex.Pattern
 
 @Composable
 fun LinkifyText(
@@ -77,13 +77,8 @@ fun LinkifyText(
     )
 }
 
-private val urlPattern: Pattern = Pattern.compile(
-    "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
-    Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
-)
-
 private fun extractUrls(text: String): List<LinkInfo> {
-    val matcher = urlPattern.matcher(text)
+    val matcher = Patterns.WEB_URL.matcher(text)
     var matchStart: Int
     var matchEnd: Int
     val links = arrayListOf<LinkInfo>()
