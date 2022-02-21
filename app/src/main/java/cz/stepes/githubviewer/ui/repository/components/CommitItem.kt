@@ -6,21 +6,25 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import cz.stepes.githubviewer.data.remote.responses.CommitResponse
 import cz.stepes.githubviewer.ui.shared.components.CircularImage
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.ui.shared.theme.unimportantText
+import androidx.compose.ui.text.font.FontWeight
+import cz.stepes.githubviewer.data.remote.responses.CommitResponse
+import cz.stepes.githubviewer.util.TimeUtil.toAgo
 
 @ExperimentalMaterialApi
 @Composable
 fun CommitItem(
     commit: CommitResponse
 ) {
+    val timeAgo = remember { commit.commit.author.date.toAgo() }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
@@ -40,6 +44,15 @@ fun CommitItem(
                     fontSize = MaterialTheme.textSize.normal,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colors.onSurface
+                )
+
+                Spacer(modifier = Modifier.weight(1.0f))
+
+                Text(
+                    text = timeAgo,
+                    fontSize = MaterialTheme.textSize.small,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.unimportantText
                 )
             }
 

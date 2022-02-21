@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
+import cz.stepes.githubviewer.ui.repository.components.BranchesSheet
 import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.ErrorCode
@@ -54,7 +55,13 @@ fun RepositoryScreen(
 
     val listState = rememberLazyListState()
 
-    Scaffold(
+    BottomSheetScaffold(
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        scaffoldState = bottomSheetScaffoldState,
+        sheetContent = {
+            BranchesSheet(viewModel = viewModel)
+        },
+        sheetPeekHeight = 0.dp,
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
