@@ -20,11 +20,15 @@ class GitHubServiceImpl(
         }
     }
 
-    override suspend fun getUser(username: String): Resource<UserResponse> {
+    override suspend fun getUser(
+        username: String
+    ): Resource<UserResponse> {
         return sendGetRequest("${HttpRoutes.USER_URL}/$username")
     }
 
-    override suspend fun getRepositoriesList(username: String): Resource<List<RepositoryResponse>> {
+    override suspend fun getRepositoriesList(
+        username: String
+    ): Resource<List<RepositoryResponse>> {
         return sendGetRequest("${HttpRoutes.USER_URL}/$username/${HttpRoutes.REPOS}")
     }
 

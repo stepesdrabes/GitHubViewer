@@ -16,7 +16,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.LanguageColors
-import kotlin.math.roundToInt
+import java.text.DecimalFormat
 
 @Composable
 fun LanguagesInfo(
@@ -37,7 +37,11 @@ fun LanguagesInfo(
         ) {
             orderedLanguages.forEach {
                 val languageColor = LanguageColors.getLanguageColor(it.key)
-                val percentage = (it.value.toDouble() / totalSize.toDouble() * 100).roundToInt()
+
+                val decimalFormat = DecimalFormat("#s.#")
+                val percentage = decimalFormat.format(
+                    it.value.toDouble() / totalSize.toDouble() * 100
+                )
 
                 Row(
                     modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),

@@ -22,7 +22,7 @@ class UserViewModel(
     fun loadUserInfo(username: String) {
         if (currentUser != username) {
 
-            currentUser = username;
+            currentUser = username
 
             viewModelScope.launch(Dispatchers.IO) {
                 userState.value = gitHubService.getUser(username)
