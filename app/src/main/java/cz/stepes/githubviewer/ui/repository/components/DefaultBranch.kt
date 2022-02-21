@@ -39,9 +39,11 @@ fun CurrentBranch(
             Spacer(modifier = Modifier.weight(1.0f))
 
             Text(
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .clickable {
 
-                },
+                    },
                 text = stringResource(id = R.string.repository_view_branches),
                 fontSize = MaterialTheme.textSize.normal,
                 fontWeight = FontWeight.ExtraBold,

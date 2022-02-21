@@ -26,7 +26,7 @@
 
     <string name="back">Zpět</string>
     <string name="no_connection">Oops!\nPřipojení k nelze navázat</string>
-    <string name="error_404">404</string>
     <string name="not_found">Hledaná položka nebyla nalezena!</string>
+    <string name="rate_limited">You are being rate limited! Thank you, GitHub public API.</string>
     <string name="open_in_browser">Otevřít v prohlížeči</string>
 </resources>

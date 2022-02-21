@@ -8,16 +8,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 
 @Composable
-fun NotFound(
+fun ErrorCode(
+    errorCode: Int,
+    description: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -31,7 +31,7 @@ fun NotFound(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.error_404),
+            text = errorCode.toString(),
             color = MaterialTheme.colors.onBackground,
             fontSize = 72.sp,
             fontWeight = FontWeight.Bold,
@@ -39,7 +39,7 @@ fun NotFound(
         )
 
         Text(
-            text = stringResource(id = R.string.not_found),
+            text = description,
             color = MaterialTheme.colors.onSurface,
             fontSize = MaterialTheme.textSize.normal,
             fontWeight = FontWeight.Bold,

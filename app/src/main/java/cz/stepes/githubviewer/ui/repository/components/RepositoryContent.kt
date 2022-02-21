@@ -1,5 +1,7 @@
 package cz.stepes.githubviewer.ui.repository.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -23,6 +25,7 @@ import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.Resource
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun RepositoryContent(
@@ -143,17 +146,25 @@ fun RepositoryContent(
             }
         }
 
-        // Last commits title
-        item {
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.large)) }
 
-            Text(
-                modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                text = stringResource(id = R.string.repository_last_commits),
-                fontSize = MaterialTheme.textSize.medium,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colors.onBackground,
-            )
+        // Last commits title
+        stickyHeader {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.background)
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+                    text = stringResource(id = R.string.repository_last_commits),
+                    fontSize = MaterialTheme.textSize.medium,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colors.onBackground,
+                )
+
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+            }
         }
 
         // Commits
@@ -173,8 +184,6 @@ fun RepositoryContent(
 
             is Resource.Success -> {
                 viewModel.commitsState.value.data?.let {
-                    item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium)) }
-
                     items(count = if (it.size < 10) it.size else 10) { index ->
                         CommitItem(commit = it[index])
 

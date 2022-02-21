@@ -21,97 +21,56 @@ class GitHubServiceImpl(
     }
 
     override suspend fun getUser(username: String): Resource<UserResponse> {
-        return try {
-            Resource.Success(
-                client.get {
-                    url("${HttpRoutes.USER_URL}/$username")
-                }
-            )
-        } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
-        } catch (exception: Exception) {
-            return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }
+        return sendGetRequest("${HttpRoutes.USER_URL}/$username")
     }
 
     override suspend fun getRepositoriesList(username: String): Resource<List<RepositoryResponse>> {
-        return try {
-            Resource.Success(
-                client.get {
-                    url("${HttpRoutes.USER_URL}/$username/${HttpRoutes.REPOS}")
-                }
-            )
-        } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
-        } catch (exception: Exception) {
-            return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }
+        return sendGetRequest("${HttpRoutes.USER_URL}/$username/${HttpRoutes.REPOS}")
     }
 
     override suspend fun getCommits(
         username: String,
         repositoryName: String
     ): Resource<List<CommitResponse>> {
-        return try {
-            Resource.Success(
-                client.get {
-                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.COMMITS}")
-                }
-            )
-        } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
-        } catch (exception: Exception) {
-            return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }
+        return sendGetRequest("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.COMMITS}")
     }
 
     override suspend fun getRepository(
         username: String,
         repositoryName: String
     ): Resource<RepositoryResponse> {
-        return try {
-            Resource.Success(
-                client.get {
-                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName")
-                }
-            )
-        } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
-        } catch (exception: Exception) {
-            return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }
+        return sendGetRequest("${HttpRoutes.REPOS_URL}/$username/$repositoryName")
     }
 
     override suspend fun getLanguages(
         username: String,
         repositoryName: String
     ): Resource<Map<String, Int>> {
-        return try {
-            Resource.Success(
-                client.get {
-                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.LANGUAGES}")
-                }
-            )
-        } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
-        } catch (exception: Exception) {
-            return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }
+        return sendGetRequest("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.LANGUAGES}")
     }
 
     override suspend fun getBranches(
         username: String,
         repositoryName: String
     ): Resource<List<BranchResponse>> {
+        return sendGetRequest("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.BRANCHES}")
+    }
+
+    private suspend inline fun <reified T> sendGetRequest(url: String): Resource<T> {
         return try {
             Resource.Success(
                 client.get {
-                    url("${HttpRoutes.REPOS_URL}/$username/$repositoryName/${HttpRoutes.BRANCHES}")
+                    url(url)
                 }
             )
         } catch (exception: ClientRequestException) {
-            return Resource.Error(errorState = ResourceErrorState.NotFound)
+            return when (exception.response.status.value) {
+                403 -> Resource.Error(errorState = ResourceErrorState.RateLimited)
+                404 -> Resource.Error(errorState = ResourceErrorState.NotFound)
+                else -> Resource.Error(errorState = ResourceErrorState.NetworkError)
+            }
         } catch (exception: Exception) {
             return Resource.Error(errorState = ResourceErrorState.NetworkError)
-        }    }
+        }
+    }
 }

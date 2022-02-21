@@ -7,6 +7,7 @@ import cz.stepes.githubviewer.data.remote.GitHubService
 import cz.stepes.githubviewer.data.remote.responses.RepositoryResponse
 import cz.stepes.githubviewer.data.remote.responses.UserResponse
 import cz.stepes.githubviewer.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -23,7 +24,7 @@ class UserViewModel(
 
             currentUser = username;
 
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 userState.value = gitHubService.getUser(username)
                 repositoriesState.value = gitHubService.getRepositoriesList(username)
             }

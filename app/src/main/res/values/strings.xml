@@ -26,7 +26,7 @@
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>
-    <string name="error_404">404</string>
     <string name="not_found">Searched item was not found!</string>
+    <string name="rate_limited">You are being rate limited! Thank you, GitHub public API.</string>
     <string name="open_in_browser">Open up in browser</string>
 </resources>

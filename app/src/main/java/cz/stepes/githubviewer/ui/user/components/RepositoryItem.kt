@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.user.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +23,7 @@ import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.LanguageColors
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun RepositoryItem(

@@ -1,5 +1,7 @@
 package cz.stepes.githubviewer.ui.user.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -25,6 +27,7 @@ import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.ui.user.UserViewModel
 import cz.stepes.githubviewer.util.Resource
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun UserContent(
@@ -83,22 +86,28 @@ fun UserContent(
             )
         }
 
-        // Repositories title
-        item {
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
+        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge)) }
 
-            Text(
+        // Repositories title
+        stickyHeader {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = MaterialTheme.spacing.textOffset),
-                text = "${stringResource(id = R.string.user_repositories)} – ${user.publicRepos}",
-                fontSize = MaterialTheme.textSize.medium,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colors.onBackground,
-            )
-        }
+                    .background(MaterialTheme.colors.background)
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = MaterialTheme.spacing.textOffset),
+                    text = "${stringResource(id = R.string.user_repositories)} – ${user.publicRepos}",
+                    fontSize = MaterialTheme.textSize.medium,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colors.onBackground,
+                )
 
-        item { Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium)) }
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+            }
+        }
 
         // Repositories
         when (viewModel.repositoriesState.value) {

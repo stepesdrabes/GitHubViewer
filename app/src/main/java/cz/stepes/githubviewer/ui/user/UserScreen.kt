@@ -3,6 +3,7 @@ package cz.stepes.githubviewer.ui.user
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,7 +22,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
 import cz.stepes.githubviewer.ui.shared.components.CircularImage
 import cz.stepes.githubviewer.ui.shared.components.NoConnection
-import cz.stepes.githubviewer.ui.shared.components.NotFound
+import cz.stepes.githubviewer.ui.shared.components.ErrorCode
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.ui.user.components.UserContent
@@ -29,6 +30,7 @@ import cz.stepes.githubviewer.util.Resource
 import cz.stepes.githubviewer.util.ResourceErrorState
 import org.koin.androidx.compose.viewModel
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Destination
 @Composable
@@ -140,10 +142,15 @@ fun UserScreen(
             is Resource.Error -> viewModel.userState.value.errorState?.let {
                 Box(modifier = Modifier.fillMaxSize()) {
                     when (it) {
-                        ResourceErrorState.NotFound -> NotFound(
-                            modifier = Modifier.align(
-                                Alignment.Center
-                            )
+                        ResourceErrorState.RateLimited -> ErrorCode(
+                            modifier = Modifier.align(Alignment.Center),
+                            errorCode = 403,
+                            description = stringResource(id = R.string.rate_limited)
+                        )
+                        ResourceErrorState.NotFound -> ErrorCode(
+                            modifier = Modifier.align(Alignment.Center),
+                            errorCode = 404,
+                            description = stringResource(id = R.string.not_found)
                         )
                         ResourceErrorState.NetworkError -> NoConnection(
                             modifier = Modifier.align(Alignment.Center)

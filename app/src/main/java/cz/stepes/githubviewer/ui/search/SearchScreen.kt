@@ -1,5 +1,6 @@
 package cz.stepes.githubviewer.ui.search
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -15,6 +16,7 @@ import cz.stepes.githubviewer.ui.search.components.SearchBar
 import cz.stepes.githubviewer.ui.search.components.StartSearching
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Destination
 @Composable
