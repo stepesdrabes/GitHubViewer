@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GitHub Viewer</string>
     <string name="activity_name">GitHub Viewer</string>
-    <string name="app_github_link">https://github.com/stepesdrabes/GithubViewer</string>
+    <string name="app_github_link">https://github.com/stepesdrabes/GitHubViewer</string>
     <string name="author_github_link">https://github.com/stepesdrabes</string>
 
     <string name="landing_text">Tato aplikace slouží pro zobrazování profilů GitHubových uživatelů a jejich repozitářů</string>
@@ -13,7 +13,7 @@
     <string name="about_app_used_libraries">Použité knihovny</string>
     <string name="about_app_author_info">Autor aplikace</string>
     <string name="about_app_author_name">Štěpán Drábek</string>
-    <string name="about_app_author_description">„Jsem mladý a nadšený student informačních technologií z České republiky, který se rád věnuje vývoji mobilních a webových aplikací v jazyce Kotlin a TypeScript.“</string>
+    <string name="about_app_author_description">„Jsem mladý a nadšený student informačních technologií z České republiky, který se rád věnuje vývoji mobilních a webových aplikací v jazyce Kotlin a TypeScript a backendová řešení v DOT.NET.“</string>
     <string-array name="about_app_libraries_names">
         <item>Jetpack Compose</item>
         <item>Accompanist</item>

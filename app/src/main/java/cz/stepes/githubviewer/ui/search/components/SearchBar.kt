@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import cz.stepes.githubviewer.ui.shared.theme.textSize
 fun SearchBar(
     placeholder: String,
     enabled: Boolean = true,
+    textState: MutableState<TextFieldValue>,
     onSearch: (String) -> Unit,
     onChange: ((String) -> Unit)? = null
 ) {
@@ -36,8 +38,6 @@ fun SearchBar(
             .fillMaxWidth()
             .height(56.dp),
     ) {
-        val textState = remember { mutableStateOf(TextFieldValue()) }
-
         BasicTextField(
             keyboardActions = KeyboardActions(
                 onDone = {

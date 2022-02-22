@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
@@ -23,6 +26,8 @@ import cz.stepes.githubviewer.ui.shared.theme.spacing
 fun SearchScreen(
     navigator: DestinationsNavigator
 ) {
+    val textState = remember { mutableStateOf(TextFieldValue()) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,6 +35,7 @@ fun SearchScreen(
     ) {
         SearchBar(
             placeholder = stringResource(id = R.string.search_placeholder),
+            textState = textState,
             onSearch = {
                 if (it.isNotEmpty()) {
                     navigator.navigate(UserScreenDestination(username = it))

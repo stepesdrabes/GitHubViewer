@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,11 +39,13 @@ fun BranchesContent(
 
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
+        // Default branch
         Row(
-            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.textOffset),
+            modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             IconInfo(iconId = R.drawable.ic_branch, value = repository.defaultBranch)
 
             Text(
@@ -52,6 +55,7 @@ fun BranchesContent(
                 color = MaterialTheme.colors.onSurface
             )
 
+            // Show more branches button when theres more than master branch
             viewModel.branchesState.value.data?.let {
                 if (it.size > 1) {
                     Spacer(modifier = Modifier.weight(1.0f))
@@ -59,11 +63,13 @@ fun BranchesContent(
                     Text(
                         modifier = Modifier
                             .fillMaxHeight()
+                            .clip(MaterialTheme.shapes.medium)
                             .clickable {
                                 coroutineScope.launch {
                                     shownState.value = !shownState.value
                                 }
-                            },
+                            }
+                            .padding(MaterialTheme.spacing.textOffset),
                         text = if (shownState.value)
                             stringResource(id = R.string.repository_hide_branches)
                         else
@@ -77,7 +83,7 @@ fun BranchesContent(
         }
 
         AnimatedVisibility(visible = shownState.value) {
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         }
 
         AnimatedVisibility(visible = shownState.value) {
@@ -99,10 +105,12 @@ fun BranchesContent(
                     viewModel.branchesState.value.data?.let { branches ->
                         Column(
                             modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.large)
+                            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium)
                         ) {
                             branches.forEach {
-                                IconInfo(iconId = R.drawable.ic_branch, value = it.name)
+                                if (repository.defaultBranch != it.name) {
+                                    IconInfo(iconId = R.drawable.ic_branch, value = it.name)
+                                }
                             }
                         }
                     }

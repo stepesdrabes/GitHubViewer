@@ -27,7 +27,11 @@ object LanguageColors {
 
     fun getLanguageColor(language: String): Color {
         colors[language]?.let {
-            return Color(android.graphics.Color.parseColor(it.color))
+            return try {
+                Color(android.graphics.Color.parseColor(it.color))
+            } catch (exception: Exception) {
+                HighlightBlue
+            }
         }
 
         return HighlightBlue

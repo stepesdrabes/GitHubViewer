@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">GitHub Viewer</string>
     <string name="activity_name">GitHub Viewer</string>
-    <string name="app_github_link">https://github.com/stepesdrabes/GithubViewer</string>
+    <string name="app_github_link">https://github.com/stepesdrabes/GitHubViewer</string>
     <string name="author_github_link">https://github.com/stepesdrabes</string>
 
     <string name="landing_text">This app serves as a viewer for GitHub users and their repositories</string>
     <string name="landing_button_text">Let\'s get started</string>
 
-    <string name="about_app_description">This app serves as a viewer for GitHub users and their repositories.\n\nYou can search specific user by their username and see theirs profile details and repositories they created or forked.\n\nYou can also open up repository detail and see all its details like what languages it uses, all branches and what programming/coding languages it uses.\n\nThis app gets all the data from a public GitHub API and the app is not in any way asocialized with Microsoft.</string>
+    <string name="about_app_description">This app serves as a viewer for GitHub users and their repositories.\n\nYou can search specific user by their username and see theirs profile details and repositories they created or forked.\n\nYou can also open up repository detail and see all its details like what languages it uses, all branches and what programming/coding languages it uses.\n\nThis app gets all the data from the public GitHub API and the app is not in any way asocialized with Microsoft.</string>
     <string name="about_app_open_github_repo">Open up GitHub repository</string>
     <string name="about_app_open_author_github_profile">Open up GitHub profile</string>
     <string name="about_app_used_libraries">Used libraries</string>
     <string name="about_app_author_info">Author of the app</string>
     <string name="about_app_author_name">Štěpán Drábek</string>
-    <string name="about_app_author_description">“I am a young and enthusiastic information technology student from the Czech Republic who likes to develop mobile and web applications in Kotlin and TypeScript.”</string>
+    <string name="about_app_author_description">“I am a young and enthusiastic information technology student from the Czech Republic who likes to develop mobile and web applications in Kotlin and TypeScript and backend solutions in DOT.NET.”</string>
     <string-array name="about_app_libraries_names">
         <item>Jetpack Compose</item>
         <item>Accompanist</item>
