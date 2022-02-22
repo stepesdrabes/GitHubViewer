@@ -21,7 +21,8 @@
     <string name="repository_languages">Languages</string>
     <string name="repository_branches">Branches</string>
     <string name="repository_default_branch">default</string>
-    <string name="repository_view_branches">Show branches</string>
+    <string name="repository_show_branches">Show branches</string>
+    <string name="repository_hide_branches">Hide branches</string>
 
     <string name="back">Back</string>
     <string name="no_connection">Oh snap!\nNo connection could be established</string>

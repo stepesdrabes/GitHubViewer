@@ -22,16 +22,17 @@ import cz.stepes.githubviewer.ui.shared.components.LinkifyText
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.Resource
+import org.koin.androidx.compose.viewModel
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
 fun RepositoryContent(
     repository: RepositoryResponse,
-    listState: LazyListState,
-    viewModel: RepositoryViewModel,
-    bottomSheetScaffoldState: BottomSheetScaffoldState
+    listState: LazyListState
 ) {
+    val viewModel: RepositoryViewModel by viewModel()
+
     val uriHandler = LocalUriHandler.current
 
     LazyColumn(
@@ -141,10 +142,7 @@ fun RepositoryContent(
 
                 is Resource.Success -> {
                     viewModel.branchesState.value.data?.let {
-                        CurrentBranch(
-                            repository = repository,
-                            bottomSheetScaffoldState = bottomSheetScaffoldState
-                        )
+                        BranchesContent(repository = repository)
                     }
                 }
             }
