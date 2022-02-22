@@ -43,36 +43,38 @@ fun LanguagesInfo(
                     it.value.toDouble() / totalSize.toDouble() * 100
                 )
 
-                Row(
-                    modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(color = languageColor)
-                    )
-
-                    Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-
-                    Text(
+                if (it.value.toDouble() / totalSize.toDouble() * 100 >= 0.1) {
+                    Row(
                         modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                        text = it.key,
-                        fontSize = MaterialTheme.textSize.normal,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colors.onBackground
-                    )
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(12.dp)
+                                .clip(CircleShape)
+                                .background(color = languageColor)
+                        )
 
-                    Spacer(modifier = Modifier.width(MaterialTheme.spacing.extraSmall))
+                        Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
 
-                    Text(
-                        modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
-                        text = "$percentage %",
-                        fontSize = MaterialTheme.textSize.normal,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colors.onSurface
-                    )
+                        Text(
+                            modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+                            text = it.key,
+                            fontSize = MaterialTheme.textSize.normal,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colors.onBackground
+                        )
+
+                        Spacer(modifier = Modifier.width(MaterialTheme.spacing.extraSmall))
+
+                        Text(
+                            modifier = Modifier.padding(start = MaterialTheme.spacing.textOffset),
+                            text = "$percentage %",
+                            fontSize = MaterialTheme.textSize.normal,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colors.onSurface
+                        )
+                    }
                 }
             }
         }

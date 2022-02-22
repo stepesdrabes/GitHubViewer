@@ -20,10 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import cz.stepes.githubviewer.R
-import cz.stepes.githubviewer.ui.repository.components.BranchesSheet
 import cz.stepes.githubviewer.ui.repository.components.RepositoryContent
-import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.components.ErrorCode
+import cz.stepes.githubviewer.ui.shared.components.NoConnection
 import cz.stepes.githubviewer.ui.shared.theme.spacing
 import cz.stepes.githubviewer.ui.shared.theme.textSize
 import cz.stepes.githubviewer.util.Resource
@@ -41,10 +40,6 @@ fun RepositoryScreen(
 ) {
     val viewModel: RepositoryViewModel by viewModel()
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
-    )
-
     LaunchedEffect(
         key1 = username,
         key2 = repositoryName,
@@ -55,13 +50,7 @@ fun RepositoryScreen(
 
     val listState = rememberLazyListState()
 
-    BottomSheetScaffold(
-        sheetBackgroundColor = MaterialTheme.colors.background,
-        scaffoldState = bottomSheetScaffoldState,
-        sheetContent = {
-            BranchesSheet(viewModel = viewModel)
-        },
-        sheetPeekHeight = 0.dp,
+    Scaffold(
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.background,
@@ -170,9 +159,7 @@ fun RepositoryScreen(
             is Resource.Success -> viewModel.repositoryState.value.data?.let {
                 RepositoryContent(
                     repository = it,
-                    listState = listState,
-                    viewModel = viewModel,
-                    bottomSheetScaffoldState = bottomSheetScaffoldState
+                    listState = listState
                 )
             }
         }

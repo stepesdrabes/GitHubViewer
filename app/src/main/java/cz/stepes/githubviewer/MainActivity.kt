@@ -14,6 +14,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import cz.stepes.githubviewer.ui.NavGraphs
 import cz.stepes.githubviewer.ui.shared.theme.GitHubViewerTheme
 import cz.stepes.githubviewer.util.LanguageColors
+import cz.stepes.githubviewer.util.TimeUtil.toAgo
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi

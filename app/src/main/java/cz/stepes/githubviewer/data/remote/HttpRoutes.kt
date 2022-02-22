@@ -7,7 +7,7 @@ object HttpRoutes {
     const val REPOS_URL = "$BASE_URL/repos"
 
     const val REPOS = "repos"
-    const val COMMITS = "commits"
+    const val COMMITS = "commits?page=0&per_page=10"
     const val LANGUAGES = "languages"
     const val BRANCHES = "branches"
 

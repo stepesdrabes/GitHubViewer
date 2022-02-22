@@ -1,9 +1,37 @@
 <resources>
     <string name="app_name">GitHub Viewer</string>
     <string name="activity_name">GitHub Viewer</string>
+    <string name="app_github_link">https://github.com/stepesdrabes/GitHubViewer</string>
+    <string name="author_github_link">https://github.com/stepesdrabes</string>
 
     <string name="landing_text">Tato aplikace slouží pro zobrazování profilů GitHubových uživatelů a jejich repozitářů</string>
     <string name="landing_button_text">Pojďme začít</string>
+
+    <string name="about_app_description">Tato aplikace slouží jako zobrazovač GitHub uživatelů a jejich repozitářů.\n\nMůžete vyhledat specifického uživatele pomocí uživatelského jména a zobrazit si detail jeho profilu a repozitáře, které vytvořil nebo forknul.\n\nMůžete si také otevřít detail repozitáře a zjistit informace, jako jsou například jaké programovací či skriptovací jazyky repozitář používá a jeho větve.\n\nAplikace čerpá data z veřejného GitHub API a není nijak asocializovaná se společností Microsoft.</string>
+    <string name="about_app_open_github_repo">Otevřít GitHub repozitář</string>
+    <string name="about_app_open_author_github_profile">Otevřít GitHub profil</string>
+    <string name="about_app_used_libraries">Použité knihovny</string>
+    <string name="about_app_author_info">Autor aplikace</string>
+    <string name="about_app_author_name">Štěpán Drábek</string>
+    <string name="about_app_author_description">„Jsem mladý a nadšený student informačních technologií z České republiky, který se rád věnuje vývoji mobilních a webových aplikací v jazyce Kotlin a TypeScript a backendová řešení v DOT.NET.“</string>
+    <string-array name="about_app_libraries_names">
+        <item>Jetpack Compose</item>
+        <item>Accompanist</item>
+        <item>Coil</item>
+        <item>Koin</item>
+        <item>Ktor client</item>
+        <item>Kotlinx serialization</item>
+        <item>Compose destinations</item>
+    </string-array>
+    <string-array name="about_app_libraries_description">
+        <item>UI framework</item>
+        <item>UI</item>
+        <item>Načítání obrázků</item>
+        <item>Vkládání závislostí</item>
+        <item>HTTP klient</item>
+        <item>JSON serializace</item>
+        <item>Navigace</item>
+    </string-array>
 
     <string name="search_placeholder">Zadejte celé uživatelské jméno…</string>
     <string name="search_description">Začněte zadáním uživatelského jména do textového pole nahoře</string>
@@ -21,11 +49,12 @@
     <string name="repository_languages">Jazyky</string>
     <string name="repository_branches">Větve</string>
     <string name="repository_default_branch">výchozí</string>
-    <string name="repository_view_branches">Zobrazit větve</string>
+    <string name="repository_show_branches">Zobrazit větve</string>
+    <string name="repository_hide_branches">Skrýt větve</string>
 
     <string name="back">Zpět</string>
     <string name="no_connection">Ajaj!\nPřipojení k serveru nelze navázat</string>
     <string name="not_found">Hledaná položka nebyla nalezena</string>
-    <string name="rate_limited">Ne tak rychle!\nGitHubu se nelíbí počet tvých nepřihlášených požadavků! Zkus to znova později</string>
+    <string name="rate_limited">Ne tak rychle!\nGitHubu se nelíbí počet tvých nepřihlášených požadavků!\nZkus to znova později</string>
     <string name="open_in_browser">Otevřít v prohlížeči</string>
 </resources>
